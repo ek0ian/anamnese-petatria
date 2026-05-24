@@ -1,0 +1,6 @@
+@AnamnesePetAtria.Api_HostAddress = http://localhost:5017
+
+GET {{AnamnesePetAtria.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
