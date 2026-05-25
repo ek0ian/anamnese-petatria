@@ -17,6 +17,8 @@ builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
 builder.Services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITutorService, TutorService>();
+builder.Services.AddScoped<IPacienteService, PacienteService>();
 
 // ========= Autenticacao JWT =========
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
