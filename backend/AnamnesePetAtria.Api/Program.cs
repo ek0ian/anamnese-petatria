@@ -19,6 +19,7 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITutorService, TutorService>();
 builder.Services.AddScoped<IPacienteService, PacienteService>();
+builder.Services.AddScoped<IAnamneseService, AnamneseService>();
 
 // ========= Autenticacao JWT =========
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
