@@ -60,14 +60,20 @@ builder.Services.AddCors(opt =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerComJwt();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Swagger sempre disponivel (inclusive em producao, conforme requisito do trabalho).
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.MapOpenApi();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Anamnese Pet'Atria v1");
+    c.RoutePrefix = "swagger";
+});
+
+// Redireciona / para /swagger.
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 app.UseCors();
 app.UseAuthentication();
