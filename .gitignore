@@ -434,9 +434,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# MongoDB data volume (se mapeado localmente)
-data/
-mongo-data/
+# MongoDB data volume (se mapeado localmente). Ancorado na raiz para nao
+# colidir com a pasta Data/ do projeto (filesystems case-insensitive).
+/data/
+/mongo-data/
 
 # JetBrains Rider
 .idea/
