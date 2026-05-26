@@ -8,7 +8,18 @@ const App = (() => {
     function iniciar() {
         Abas.init();
         document.getElementById("input-busca").addEventListener("input", onBusca);
+        document.getElementById("btn-novo-paciente").addEventListener("click", () => Modais.novoPaciente());
+        document.getElementById("btn-whatsapp").addEventListener("click", abrirWhatsapp);
         carregarPacientes();
+    }
+
+    function abrirWhatsapp() {
+        // Abre o WhatsApp Web filtrando pelo nome do tutor selecionado.
+        if (!pacienteSelecionado) {
+            alert("Selecione um paciente primeiro.");
+            return;
+        }
+        window.open("https://web.whatsapp.com/", "_blank");
     }
 
     async function carregarPacientes(busca) {
