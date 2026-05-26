@@ -54,10 +54,13 @@ const Modais = (() => {
                 </div>
 
                 <label>Tutor
-                    <select name="tutorId" required>
+                    <select name="tutorId">
                         <option value="">Selecione um tutor existente</option>
                         ${tutores.map(t => `<option value="${t.id}">${t.nome}</option>`).join("")}
                     </select>
+                    <small style="color:var(--texto-suave);font-size:12px;font-weight:normal">
+                        Ou cadastre um novo tutor logo abaixo.
+                    </small>
                 </label>
 
                 <details>
