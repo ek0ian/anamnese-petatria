@@ -110,8 +110,21 @@ const Abas = (() => {
         }
     };
 
-    // Handlers que precisam ser ligados depois do innerHTML — definidos no proximo commit.
-    const enhancers = {};
+    // Handlers que precisam ser ligados depois do innerHTML.
+    const enhancers = {
+        anamnese(p) {
+            document.getElementById("btn-nova-anamnese")?.addEventListener("click",
+                () => Modais.novaAnamnese(p));
+        },
+        exames(p) {
+            document.getElementById("btn-nova-solicitacao")?.addEventListener("click",
+                () => Modais.novaSolicitacao(p));
+        },
+        atestados(p) {
+            document.getElementById("btn-novo-atestado")?.addEventListener("click",
+                () => Modais.novoAtestado(p));
+        }
+    };
 
     function registrarEnhancer(aba, fn) { enhancers[aba] = fn; }
 
