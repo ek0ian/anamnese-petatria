@@ -77,17 +77,15 @@ const Auth = (() => {
 
     function mostrarLogin() {
         document.getElementById("view-login").classList.add("ativa");
-        document.getElementById("view-app").hidden = true;
         document.getElementById("view-app").classList.remove("ativa");
+        document.getElementById("view-app").hidden = true;
     }
 
     function mostrarApp(usuario) {
         document.getElementById("view-login").classList.remove("ativa");
-        document.getElementById("view-login").style.display = "none";
         const app = document.getElementById("view-app");
         app.hidden = false;
         app.classList.add("ativa");
-        app.style.display = "block";
 
         document.getElementById("user-nome").textContent = usuario.nome;
         document.getElementById("user-perfil").textContent = usuario.perfil;
