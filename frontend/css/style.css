@@ -45,9 +45,12 @@ a {
 }
 a:hover { text-decoration: underline; }
 
-/* ========= View switcher ========= */
-.view { display: none; }
-.view.ativa { display: block; }
+/* ========= View switcher =========
+   O atributo HTML `hidden` precisa vencer qualquer `display:` explicito
+   (.form, .modal, .view-login usam display: flex e isso anula o hidden padrao). */
+[hidden] { display: none !important; }
+
+.view:not(.ativa) { display: none; }
 
 /* ========= LOGIN ========= */
 .view-login {
