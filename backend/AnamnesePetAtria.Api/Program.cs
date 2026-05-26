@@ -59,7 +59,13 @@ builder.Services.AddCors(opt =>
         .AllowAnyMethod());
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        // Aceita enums como string ("Canino") nos requests, alem do numero.
+        opt.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 builder.Services.AddSwaggerComJwt();
 
 var app = builder.Build();
