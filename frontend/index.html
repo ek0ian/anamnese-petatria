@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anamnese Pet'Atria</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- ============ LOGIN ============ -->
+    <section id="view-login" class="view view-login">
+        <div class="login-card">
+            <div class="logo-anim">
+                <div class="logo-circle"><span>C</span></div>
+                <h1>Anamnese Pet'Atria</h1>
+                <p class="subtitle">Prontuario veterinario digital</p>
+            </div>
+            <form id="form-login" class="form">
+                <label>
+                    E-mail
+                    <input type="email" name="email" required autocomplete="username" />
+                </label>
+                <label>
+                    Senha
+                    <input type="password" name="senha" required autocomplete="current-password" minlength="6" />
+                </label>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <p class="form-aux">
+                    Sem conta? <a href="#" id="link-mostrar-registro">Registrar-se</a>
+                </p>
+                <p id="msg-login" class="msg-erro" hidden></p>
+            </form>
+
+            <form id="form-registro" class="form" hidden>
+                <label>
+                    Nome
+                    <input type="text" name="nome" required minlength="3" />
+                </label>
+                <label>
+                    E-mail
+                    <input type="email" name="email" required />
+                </label>
+                <label>
+                    Senha
+                    <input type="password" name="senha" required minlength="6" />
+                </label>
+                <label>
+                    Perfil
+                    <select name="perfil">
+                        <option value="veterinario">Veterinario</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </label>
+                <button type="submit" class="btn btn-primary">Criar conta</button>
+                <p class="form-aux">
+                    Ja tem conta? <a href="#" id="link-mostrar-login">Entrar</a>
+                </p>
+                <p id="msg-registro" class="msg-erro" hidden></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============ APP ============ -->
+    <section id="view-app" class="view view-app" hidden>
+
+        <!-- Header -->
+        <header class="topbar">
+            <button class="btn-icon" id="btn-menu" title="Menu">☰</button>
+            <div class="brand">
+                <div class="brand-logo"><span>C</span></div>
+                <span class="brand-name">Anamnese Pet'Atria</span>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-icon btn-add" id="btn-novo-paciente" title="Novo paciente">+</button>
+                <button class="btn-icon btn-wapp" id="btn-whatsapp" title="WhatsApp">W</button>
+                <div class="user-chip">
+                    <div class="avatar"><span id="user-iniciais">--</span></div>
+                    <div class="user-info">
+                        <strong id="user-nome">--</strong>
+                        <small id="user-perfil">--</small>
+                    </div>
+                    <button class="btn-icon" id="btn-sair" title="Sair">↩</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="search-bar">
+            <input
+                type="text"
+                id="input-busca"
+                placeholder="Buscar por responsavel, animal ou ID..."
+                autocomplete="off"
+            />
+            <span class="search-icon">🔎</span>
+        </div>
+
+        <!-- Lista de pacientes (sidebar) -->
+        <main class="layout">
+            <aside class="lista-pacientes" id="lista-pacientes">
+                <div class="lista-header">Pacientes</div>
+                <ul id="ul-pacientes"></ul>
+            </aside>
+
+            <!-- Painel do paciente selecionado -->
+            <section class="painel-paciente" id="painel-paciente">
+                <div class="vazio" id="painel-vazio">
+                    <p>Selecione um paciente para ver o prontuario.</p>
+                </div>
+
+                <div id="painel-conteudo" hidden>
+                    <!-- Card do paciente -->
+                    <div class="card-paciente">
+                        <div class="card-paciente-avatar">
+                            <span id="paciente-icone">🐕</span>
+                        </div>
+                        <div class="card-paciente-info">
+                            <h2 id="paciente-nome">--</h2>
+                            <div class="card-paciente-meta">
+                                <span>ID <strong id="paciente-codigo">--</strong></span>
+                                <span id="paciente-raca">--</span>
+                                <span id="paciente-idade">--</span>
+                            </div>
+                            <div class="card-paciente-tutor">
+                                Tutor: <strong id="paciente-tutor">--</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Abas -->
+                    <nav class="abas" id="abas">
+                        <button class="aba ativa" data-aba="anamnese">Anamnese</button>
+                        <button class="aba" data-aba="vacinas">Vacinas</button>
+                        <button class="aba" data-aba="prescricoes">Prescricoes</button>
+                        <button class="aba" data-aba="exames">Exames</button>
+                        <button class="aba" data-aba="atestados">Atestados e Termos</button>
+                        <button class="aba" data-aba="medicamentos">Medicamentos</button>
+                        <button class="aba" data-aba="retornos">Retornos</button>
+                        <button class="aba" data-aba="procedimentos">Procedimentos</button>
+                        <button class="aba" data-aba="cirurgias">Cirurgias</button>
+                        <button class="aba" data-aba="internacoes">Internacoes</button>
+                        <button class="aba" data-aba="orcamentos">Orcamentos</button>
+                    </nav>
+
+                    <!-- Conteudo da aba (substituido dinamicamente pela navegacao assincrona) -->
+                    <div class="aba-conteudo" id="aba-conteudo">
+                        <p class="vazio">Carregando...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <!-- ============ MODAIS ============ -->
+    <div class="modal" id="modal" hidden>
+        <div class="modal-overlay" data-fechar-modal></div>
+        <div class="modal-card" id="modal-card">
+            <!-- conteudo do modal injetado por JS -->
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/abas.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
