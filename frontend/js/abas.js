@@ -48,11 +48,12 @@ const Abas = (() => {
             const itens = lista.length === 0
                 ? `<p class="vazio">Nenhuma anamnese registrada.</p>`
                 : `<ul class="lista-itens">${lista.map(a => `
-                    <li>
+                    <li class="clicavel" data-ver="anamnese" data-id="${a.id}">
                         <div class="item-info">
                             <div class="item-titulo">Anamnese de ${formatarData(a.criadoEm)}</div>
                             <div class="item-meta">${a.queixaPrincipal || "Sem queixa registrada"}</div>
                         </div>
+                        <div class="item-acoes"><span class="seta">›</span></div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -67,11 +68,12 @@ const Abas = (() => {
             const itens = lista.length === 0
                 ? `<p class="vazio">Nenhuma solicitacao de exames.</p>`
                 : `<ul class="lista-itens">${lista.map(s => `
-                    <li>
+                    <li class="clicavel" data-ver="exame" data-id="${s.id}">
                         <div class="item-info">
                             <div class="item-titulo">${formatarData(s.data)}</div>
                             <div class="item-meta">${s.exames.map(e => `${e.categoria} — ${e.nome}`).join("<br>")}</div>
                         </div>
+                        <div class="item-acoes"><span class="seta">›</span></div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -86,11 +88,12 @@ const Abas = (() => {
             const itens = lista.length === 0
                 ? `<p class="vazio">Nenhum atestado ou termo criado.</p>`
                 : `<ul class="lista-itens">${lista.map(a => `
-                    <li>
+                    <li class="clicavel" data-ver="atestado" data-id="${a.id}">
                         <div class="item-info">
                             <div class="item-titulo">${formatarTipo(a.tipo)}</div>
                             <div class="item-meta">Emitido em ${formatarData(a.dataEmissao)} · ${a.cidade || "—"}</div>
                         </div>
+                        <div class="item-acoes"><span class="seta">›</span></div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -110,19 +113,34 @@ const Abas = (() => {
         }
     };
 
+    function ligarClicksDeVer() {
+        document.querySelectorAll("li.clicavel[data-ver]").forEach(li => {
+            li.addEventListener("click", () => {
+                const tipo = li.dataset.ver;
+                const id = li.dataset.id;
+                if (tipo === "anamnese") Modais.verAnamnese(id);
+                else if (tipo === "exame") Modais.verExame(id);
+                else if (tipo === "atestado") Modais.verAtestado(id);
+            });
+        });
+    }
+
     // Handlers que precisam ser ligados depois do innerHTML.
     const enhancers = {
         anamnese(p) {
             document.getElementById("btn-nova-anamnese")?.addEventListener("click",
                 () => Modais.novaAnamnese(p));
+            ligarClicksDeVer();
         },
         exames(p) {
             document.getElementById("btn-nova-solicitacao")?.addEventListener("click",
                 () => Modais.novaSolicitacao(p));
+            ligarClicksDeVer();
         },
         atestados(p) {
             document.getElementById("btn-novo-atestado")?.addEventListener("click",
                 () => Modais.novoAtestado(p));
+            ligarClicksDeVer();
         }
     };
 

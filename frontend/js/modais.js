@@ -427,5 +427,168 @@ const Modais = (() => {
         });
     }
 
-    return { abrir, fechar, novoPaciente, novaAnamnese, novaSolicitacao, novoAtestado };
+    /* =========== Visualizacao de detalhe =========== */
+    function linha(rotulo, valor) {
+        if (valor === null || valor === undefined || valor === "" || valor === false) return "";
+        const v = valor === true ? "Sim" : valor;
+        return `<div style="margin-bottom:6px"><strong>${rotulo}:</strong> ${v}</div>`;
+    }
+
+    function listaCheck(rotulo, arr) {
+        if (!arr || arr.length === 0) return "";
+        return `<div style="margin-bottom:6px"><strong>${rotulo}:</strong> ${arr.join(", ")}</div>`;
+    }
+
+    function formatarData(iso) {
+        if (!iso) return "—";
+        return new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+    }
+
+    async function verAnamnese(id) {
+        const a = await API.obterAnamnese(id);
+        const ig = a.inspecaoGeral || {};
+        const hc = a.historicoClinico || {};
+        abrir(`
+            <h2>Anamnese de ${formatarData(a.criadoEm)}</h2>
+
+            <div class="bloco">
+                <h3>Queixa principal</h3>
+                <p>${a.queixaPrincipal || "<em>nao informado</em>"}</p>
+            </div>
+
+            <div class="bloco">
+                <h3>Historico do quadro clinico atual</h3>
+                ${linha("Inicio dos sintomas", a.inicioSintomas)}
+                ${linha("Possivel desencadeador", a.possivelDesencadeador)}
+                ${linha("Ja apresentou antes", a.jaApresentou)}
+                ${linha("Teve evolucao", a.teveEvolucao)}
+                ${linha("Evolucao", a.evolucao)}
+                ${linha("Usou medicamento", a.usouMedicamento)}
+                ${linha("Qual medicamento", a.qualMedicamento)}
+                ${linha("Contactante com mesmo quadro", a.contactanteMesmoQuadro)}
+                ${linha("Informacao adicional", a.informacaoAdicional)}
+            </div>
+
+            <div class="bloco">
+                <h3>Historico clinico geral</h3>
+                ${listaCheck("Vacinacao", hc.vacinacao)}
+                ${linha("Vermifugacao", hc.vermifugacao)}
+                ${linha("Controle ectoparasitario", hc.controleEctoparasitario)}
+                ${linha("Doenca pre-existente", hc.doencaPreExistente)}
+                ${linha("Alimentacao", hc.alimentacao)}
+                ${linha("Ingestao hidrica", hc.ingestaoHidrica)}
+                ${linha("Ultimo cio", hc.ultimoCio)}
+                ${linha("Contactantes", hc.contactantes)}
+                ${linha("Teste FIV/FELV/Leishmaniose", hc.testeFivFelvLeishmaniose)}
+            </div>
+
+            <div class="bloco">
+                <h3>Inspecao geral</h3>
+                ${linha("Temperatura", ig.temperatura)}
+                ${linha("Escore corporal / peso", ig.escoreCorporalPeso)}
+                ${linha("Atividade", ig.atividade)}
+                ${linha("FC", ig.fc)} ${linha("FR", ig.fr)} ${linha("TPC", ig.tpc)} ${linha("TC", ig.tc)}
+                ${linha("Ausculta", ig.ausculta)}
+                ${linha("Mucosas", ig.mucosas)}
+                ${linha("Comportamento", ig.comportamento)}
+                ${listaCheck("Gastrointestinal", ig.gastrointestinal)}
+                ${listaCheck("Urogenital", ig.urogenital)}
+                ${listaCheck("Neurologico", ig.neurologico)}
+                ${listaCheck("Olhos", ig.olhos)}
+                ${listaCheck("Ouvidos", ig.ouvidos)}
+                ${listaCheck("Locomotor", ig.locomotor)}
+                ${listaCheck("Nariz", ig.nariz)}
+                ${listaCheck("Pele", ig.pele)}
+                ${listaCheck("Cavidade oral", ig.cavidadeOral)}
+            </div>
+
+            <div class="bloco">
+                <h3>Diagnostico e conduta</h3>
+                ${linha("Local da lesao", a.localLesao)}
+                ${linha("Diagnostico", a.diagnostico)}
+                ${linha("Conduta clinica", a.condutaClinica)}
+                ${linha("Procedimentos realizados", a.procedimentosRealizados)}
+                ${linha("Exames solicitados", a.examesSolicitadosTexto)}
+                ${linha("Extras", a.extras)}
+            </div>
+
+            <div class="modal-acoes">
+                <button class="btn btn-secundario" data-fechar-modal>Fechar</button>
+            </div>
+        `);
+    }
+
+    async function verExame(id) {
+        const s = await API.obterExame(id);
+        const grupos = {};
+        (s.exames || []).forEach(e => {
+            grupos[e.categoria] = grupos[e.categoria] || [];
+            grupos[e.categoria].push(e);
+        });
+        abrir(`
+            <h2>Solicitacao de exames — ${formatarData(s.data)}</h2>
+            ${Object.entries(grupos).map(([cat, itens]) => `
+                <div class="bloco">
+                    <h3>${cat}</h3>
+                    <ul style="padding-left:18px">
+                        ${itens.map(i => `
+                            <li>
+                                ${i.nome}
+                                ${i.parametros && i.parametros.length > 0
+                                    ? `<div style="font-size:12px;color:var(--texto-suave);margin-left:6px">${i.parametros.join(", ")}</div>`
+                                    : ""}
+                            </li>
+                        `).join("")}
+                    </ul>
+                </div>
+            `).join("")}
+            <div class="bloco">
+                <h3>Motivos da solicitacao</h3>
+                <p>${s.motivos || "<em>nao informado</em>"}</p>
+            </div>
+            <div class="modal-acoes">
+                <button class="btn btn-secundario" data-fechar-modal>Fechar</button>
+            </div>
+        `);
+    }
+
+    async function verAtestado(id) {
+        const a = await API.obterAtestado(id);
+        const titulosTipo = {
+            TermoExames: "Termo para Realizacao de Exames",
+            TermoProcedimentoRisco: "Termo para Procedimento Terapeutico de Risco",
+            TermoObito: "Termo de Obito",
+            TermoEutanasia: "Termo para Realizacao de Eutanasia",
+            TermoCirurgico: "Termo para Procedimentos Cirurgicos",
+            TermoRetiradaSemAlta: "Termo para Retirada sem Alta",
+            AtestadoEncaminhamento: "Atestado de Encaminhamento"
+        };
+        abrir(`
+            <h2>${titulosTipo[a.tipo] || a.tipo}</h2>
+            <div class="bloco">
+                ${linha("Cidade", a.cidade)}
+                ${linha("Data de emissao", formatarData(a.dataEmissao))}
+            </div>
+            <div class="bloco">
+                <h3>Conteudo</h3>
+                <p style="white-space:pre-wrap">${a.conteudo || ""}</p>
+            </div>
+            ${a.identificacaoComplementar ? `
+                <div class="bloco">
+                    <h3>Identificacao complementar</h3>
+                    <p style="white-space:pre-wrap">${a.identificacaoComplementar}</p>
+                </div>
+            ` : ""}
+            <div class="modal-acoes">
+                <button class="btn btn-secundario" data-fechar-modal>Fechar</button>
+                <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+            </div>
+        `);
+    }
+
+    return {
+        abrir, fechar,
+        novoPaciente, novaAnamnese, novaSolicitacao, novoAtestado,
+        verAnamnese, verExame, verAtestado
+    };
 })();
