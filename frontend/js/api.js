@@ -70,6 +70,7 @@ const API = (() => {
 
         // Anamneses
         listarAnamneses: (pacienteId) => req("GET", `/anamneses/paciente/${pacienteId}`),
+        obterAnamnese: (id) => req("GET", `/anamneses/${id}`),
         criarAnamnese: (payload) => req("POST", "/anamneses", payload),
 
         // Exames
@@ -77,11 +78,13 @@ const API = (() => {
         catalogoExames: (termo) =>
             req("GET", `/exames/catalogo${termo ? `?termo=${encodeURIComponent(termo)}` : ""}`),
         listarExames: (pacienteId) => req("GET", `/exames/paciente/${pacienteId}`),
+        obterExame: (id) => req("GET", `/exames/${id}`),
         criarExame: (payload) => req("POST", "/exames", payload),
 
         // Atestados
         modelosAtestado: () => req("GET", "/atestados/modelos"),
         listarAtestados: (pacienteId) => req("GET", `/atestados/paciente/${pacienteId}`),
+        obterAtestado: (id) => req("GET", `/atestados/${id}`),
         criarAtestado: (payload) => req("POST", "/atestados", payload),
 
         // Utilitarios de sessao

@@ -508,7 +508,19 @@ a:hover { text-decoration: underline; }
 .lista-itens .item-info { flex: 1; }
 .lista-itens .item-titulo { font-weight: 600; color: var(--roxo-escuro); margin-bottom: 2px; }
 .lista-itens .item-meta { color: var(--texto-suave); font-size: 13px; }
-.lista-itens .item-acoes { display: flex; gap: 6px; }
+.lista-itens .item-acoes { display: flex; gap: 6px; align-items: center; }
+
+.lista-itens li.clicavel { cursor: pointer; transition: border-color 0.12s, transform 0.05s; }
+.lista-itens li.clicavel:hover {
+    border-color: var(--roxo-escuro);
+    background: var(--creme-claro);
+}
+.lista-itens li.clicavel:active { transform: translateY(1px); }
+.lista-itens .seta {
+    color: var(--roxo-claro);
+    font-size: 22px;
+    line-height: 1;
+}
 
 .toolbar-aba {
     display: flex;
