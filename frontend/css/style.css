@@ -522,6 +522,22 @@ a:hover { text-decoration: underline; }
     line-height: 1;
 }
 
+.btn-mini {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: var(--creme-medio);
+    color: var(--roxo-escuro);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s;
+}
+
+.btn-mini:hover { background: var(--borda); }
+.btn-mini-delete:hover { background: #fbeaec; color: var(--vermelho); }
+
 .toolbar-aba {
     display: flex;
     justify-content: space-between;

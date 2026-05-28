@@ -87,6 +87,13 @@ const API = (() => {
         obterAtestado: (id) => req("GET", `/atestados/${id}`),
         criarAtestado: (payload) => req("POST", "/atestados", payload),
 
+        // CRUD generico por recurso (vacinas, prescricoes, retornos, etc).
+        listar: (recurso, pacienteId) => req("GET", `/${recurso}/paciente/${pacienteId}`),
+        obter: (recurso, id) => req("GET", `/${recurso}/${id}`),
+        criar: (recurso, payload) => req("POST", `/${recurso}`, payload),
+        atualizar: (recurso, id, payload) => req("PUT", `/${recurso}/${id}`, payload),
+        remover: (recurso, id) => req("DELETE", `/${recurso}/${id}`),
+
         // Utilitarios de sessao
         getToken, setToken, getUsuario, setUsuario
     };

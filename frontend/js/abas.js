@@ -35,6 +35,7 @@ const Abas = (() => {
             cont.innerHTML = await render(pacienteAtual);
             const enhancer = enhancers[aba];
             if (enhancer) enhancer(pacienteAtual);
+            else ligarEnhancerExtras(aba, pacienteAtual);
         } catch (ex) {
             cont.innerHTML = `<p class="msg-erro">${ex.message}</p>`;
         }
@@ -53,7 +54,10 @@ const Abas = (() => {
                             <div class="item-titulo">Anamnese de ${formatarData(a.criadoEm)}</div>
                             <div class="item-meta">${a.queixaPrincipal || "Sem queixa registrada"}</div>
                         </div>
-                        <div class="item-acoes"><span class="seta">›</span></div>
+                        <div class="item-acoes">
+                            <button class="btn-mini btn-mini-delete" data-deletar-fixo data-id="${a.id}" title="Excluir">🗑</button>
+                            <span class="seta">›</span>
+                        </div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -73,7 +77,10 @@ const Abas = (() => {
                             <div class="item-titulo">${formatarData(s.data)}</div>
                             <div class="item-meta">${s.exames.map(e => `${e.categoria} — ${e.nome}`).join("<br>")}</div>
                         </div>
-                        <div class="item-acoes"><span class="seta">›</span></div>
+                        <div class="item-acoes">
+                            <button class="btn-mini btn-mini-delete" data-deletar-fixo data-id="${s.id}" title="Excluir">🗑</button>
+                            <span class="seta">›</span>
+                        </div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -93,7 +100,10 @@ const Abas = (() => {
                             <div class="item-titulo">${formatarTipo(a.tipo)}</div>
                             <div class="item-meta">Emitido em ${formatarData(a.dataEmissao)} · ${a.cidade || "—"}</div>
                         </div>
-                        <div class="item-acoes"><span class="seta">›</span></div>
+                        <div class="item-acoes">
+                            <button class="btn-mini btn-mini-delete" data-deletar-fixo data-id="${a.id}" title="Excluir">🗑</button>
+                            <span class="seta">›</span>
+                        </div>
                     </li>`).join("")}</ul>`;
             return `
                 <div class="toolbar-aba">
@@ -104,6 +114,10 @@ const Abas = (() => {
             `;
         },
         async default(p) {
+            // Tenta render via AbasExtras (vacinas, prescricoes, retornos, etc).
+            if (typeof AbasExtras !== "undefined" && AbasExtras.TIPOS[abaAtual]) {
+                return await AbasExtras.renderAba(abaAtual, p);
+            }
             return `
                 <div class="bloco">
                     <h3>Em desenvolvimento</h3>
@@ -115,12 +129,31 @@ const Abas = (() => {
 
     function ligarClicksDeVer() {
         document.querySelectorAll("li.clicavel[data-ver]").forEach(li => {
-            li.addEventListener("click", () => {
+            li.addEventListener("click", e => {
+                if (e.target.closest("[data-deletar-fixo]")) return;
                 const tipo = li.dataset.ver;
                 const id = li.dataset.id;
                 if (tipo === "anamnese") Modais.verAnamnese(id);
                 else if (tipo === "exame") Modais.verExame(id);
                 else if (tipo === "atestado") Modais.verAtestado(id);
+            });
+        });
+
+        const recursoPorTipo = { anamnese: "anamneses", exame: "exames", atestado: "atestados" };
+        document.querySelectorAll("[data-deletar-fixo]").forEach(btn => {
+            btn.addEventListener("click", async e => {
+                e.stopPropagation();
+                if (!confirm("Excluir este registro? Esta acao nao pode ser desfeita.")) return;
+                const li = btn.closest("[data-ver]");
+                const recurso = recursoPorTipo[li.dataset.ver];
+                try {
+                    await API.remover(recurso, btn.dataset.id);
+                    Abas.trocar(li.dataset.ver === "exame" ? "exames"
+                              : li.dataset.ver === "atestado" ? "atestados"
+                              : "anamnese");
+                } catch (ex) {
+                    alert(ex.message);
+                }
             });
         });
     }
@@ -143,6 +176,13 @@ const Abas = (() => {
             ligarClicksDeVer();
         }
     };
+
+    // Para qualquer aba do AbasExtras, liga os handlers.
+    function ligarEnhancerExtras(aba, p) {
+        if (typeof AbasExtras !== "undefined" && AbasExtras.TIPOS[aba]) {
+            AbasExtras.ligarHandlers(p);
+        }
+    }
 
     function registrarEnhancer(aba, fn) { enhancers[aba] = fn; }
 
