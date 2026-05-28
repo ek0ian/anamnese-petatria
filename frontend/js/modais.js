@@ -589,6 +589,7 @@ const Modais = (() => {
     return {
         abrir, fechar,
         novoPaciente, novaAnamnese, novaSolicitacao, novoAtestado,
-        verAnamnese, verExame, verAtestado
+        verAnamnese, verExame, verAtestado,
+        linha, listaCheck
     };
 })();
