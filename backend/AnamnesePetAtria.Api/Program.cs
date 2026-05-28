@@ -23,6 +23,22 @@ builder.Services.AddScoped<IAnamneseService, AnamneseService>();
 builder.Services.AddScoped<IExameService, ExameService>();
 builder.Services.AddScoped<IAtestadoService, AtestadoService>();
 
+// Servicos genericos para entidades vinculadas a paciente.
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Vacina>(sp.GetRequiredService<IMongoDbContext>().Vacinas));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Prescricao>(sp.GetRequiredService<IMongoDbContext>().Prescricoes));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Retorno>(sp.GetRequiredService<IMongoDbContext>().Retornos));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Procedimento>(sp.GetRequiredService<IMongoDbContext>().Procedimentos));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Cirurgia>(sp.GetRequiredService<IMongoDbContext>().Cirurgias));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Internacao>(sp.GetRequiredService<IMongoDbContext>().Internacoes));
+builder.Services.AddScoped(sp =>
+    new ServicoPaciente<Orcamento>(sp.GetRequiredService<IMongoDbContext>().Orcamentos));
+
 // ========= Autenticacao JWT =========
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
     ?? throw new InvalidOperationException("Secao 'Jwt' nao configurada em appsettings.");

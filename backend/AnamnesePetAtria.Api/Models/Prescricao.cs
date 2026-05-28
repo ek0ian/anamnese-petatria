@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AnamnesePetAtria.Api.Models;
 
-public class Prescricao : EntidadeBase
+public class Prescricao : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -28,7 +28,7 @@ public class ItemPrescricao
     public string? Duracao { get; set; }
 }
 
-public class Retorno : EntidadeBase
+public class Retorno : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -44,7 +44,7 @@ public class Retorno : EntidadeBase
     public bool Realizado { get; set; }
 }
 
-public class Procedimento : EntidadeBase
+public class Procedimento : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -60,7 +60,7 @@ public class Procedimento : EntidadeBase
     public string? Descricao { get; set; }
 }
 
-public class Cirurgia : EntidadeBase
+public class Cirurgia : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -79,7 +79,7 @@ public class Cirurgia : EntidadeBase
     public string? Observacoes { get; set; }
 }
 
-public class Internacao : EntidadeBase
+public class Internacao : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -98,7 +98,7 @@ public class Internacao : EntidadeBase
     public string? Evolucao { get; set; }
 }
 
-public class Orcamento : EntidadeBase
+public class Orcamento : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
