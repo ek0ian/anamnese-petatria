@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AnamnesePetAtria.Api.Models;
 
-public class Vacina : EntidadeBase
+public class Vacina : EntidadeBase, IEntidadePaciente
 {
     [BsonElement("pacienteId")]
     [BsonRepresentation(BsonType.ObjectId)]
