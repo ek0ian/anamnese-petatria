@@ -10,7 +10,19 @@ const App = (() => {
         document.getElementById("input-busca").addEventListener("input", onBusca);
         document.getElementById("btn-novo-paciente").addEventListener("click", () => Modais.novoPaciente());
         document.getElementById("btn-whatsapp").addEventListener("click", abrirWhatsapp);
+        document.getElementById("btn-seed").addEventListener("click", carregarSeed);
         carregarPacientes();
+    }
+
+    async function carregarSeed() {
+        if (!confirm("Carregar dados de exemplo? Funciona apenas se o banco estiver vazio.")) return;
+        try {
+            const r = await API.seed();
+            alert(`OK!\n\n${r.pacientes} pacientes, ${r.anamneses} anamneses, ${r.vacinas} vacinas, ${r.exames} exames, ${r.atestados} atestados, ${r.prescricoes} prescricoes e ${r.retornos} retornos foram criados.`);
+            carregarPacientes();
+        } catch (ex) {
+            alert(ex.message);
+        }
     }
 
     function abrirWhatsapp() {
