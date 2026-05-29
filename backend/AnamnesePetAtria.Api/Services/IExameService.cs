@@ -38,7 +38,7 @@ public class ExameService : IExameService
             throw new InvalidOperationException("Pelo menos um exame deve ser solicitado.");
 
         var pacienteExiste = await _db.Pacientes.Find(p => p.Id == solicitacao.PacienteId).AnyAsync();
-        if (!pacienteExiste) throw new InvalidOperationException("Paciente nao encontrado.");
+        if (!pacienteExiste) throw new InvalidOperationException("Paciente não encontrado.");
 
         solicitacao.CriadoEm = DateTime.UtcNow;
         await _db.Exames.InsertOneAsync(solicitacao);

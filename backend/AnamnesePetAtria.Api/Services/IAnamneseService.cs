@@ -51,6 +51,6 @@ public class AnamneseService : IAnamneseService
     private async Task ValidarPacienteAsync(string pacienteId)
     {
         var existe = await _db.Pacientes.Find(p => p.Id == pacienteId).AnyAsync();
-        if (!existe) throw new InvalidOperationException("Paciente nao encontrado.");
+        if (!existe) throw new InvalidOperationException("Paciente não encontrado.");
     }
 }

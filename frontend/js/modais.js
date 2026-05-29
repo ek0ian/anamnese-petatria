@@ -28,20 +28,20 @@ const Modais = (() => {
                     <label>Data de nascimento
                         <input type="date" name="dataNascimento" />
                     </label>
-                    <label>Especie
+                    <label>Espécie
                         <select name="especie" required>
                             <option value="Canino">Canino</option>
                             <option value="Felino">Felino</option>
                             <option value="Outro">Outro</option>
                         </select>
                     </label>
-                    <label>Raca
+                    <label>Raça
                         <input type="text" name="raca" />
                     </label>
                     <label>Sexo
                         <select name="sexo" required>
                             <option value="Macho">Macho</option>
-                            <option value="Femea">Femea</option>
+                            <option value="Femea">Fêmea</option>
                         </select>
                     </label>
                     <label>Peso (kg)
@@ -50,7 +50,7 @@ const Modais = (() => {
                 </div>
                 <div class="checkbox-grupo" style="margin-top:8px">
                     <label><input type="checkbox" name="castrado" /> Castrado</label>
-                    <label><input type="checkbox" name="temAcessoRua" /> Tem acesso a rua</label>
+                    <label><input type="checkbox" name="temAcessoRua" /> Tem acesso à rua</label>
                 </div>
 
                 <label>Tutor
@@ -137,24 +137,24 @@ const Modais = (() => {
             <form id="form-nova-anamnese" class="form">
                 <div class="bloco">
                     <h3>Queixa principal</h3>
-                    <textarea name="queixaPrincipal" rows="2" placeholder="Descricao..."></textarea>
+                    <textarea name="queixaPrincipal" rows="2" placeholder="Descrição..."></textarea>
                 </div>
 
                 <div class="bloco">
-                    <h3>Historico do quadro clinico atual</h3>
-                    <label>Inicio dos sintomas
+                    <h3>Histórico do quadro clínico atual</h3>
+                    <label>Início dos sintomas
                         <input type="text" name="inicioSintomas" />
                     </label>
-                    <label style="margin-top:8px">Possivel desencadeador
+                    <label style="margin-top:8px">Possível desencadeador
                         <input type="text" name="possivelDesencadeador" />
                     </label>
                     <div class="checkbox-grupo" style="margin-top:10px">
-                        <label><input type="checkbox" name="jaApresentou" /> Ja apresentou antes</label>
-                        <label><input type="checkbox" name="teveEvolucao" /> Teve evolucao</label>
+                        <label><input type="checkbox" name="jaApresentou" /> Já apresentou antes</label>
+                        <label><input type="checkbox" name="teveEvolucao" /> Teve evolução</label>
                         <label><input type="checkbox" name="usouMedicamento" /> Usou medicamento</label>
                         <label><input type="checkbox" name="contactanteMesmoQuadro" /> Contactante com mesmo quadro</label>
                     </div>
-                    <label style="margin-top:8px">Evolucao
+                    <label style="margin-top:8px">Evolução
                         <select name="evolucao">
                             <option value="">—</option>
                             <option value="melhora">Melhora</option>
@@ -164,13 +164,13 @@ const Modais = (() => {
                     <label style="margin-top:8px">Qual medicamento
                         <input type="text" name="qualMedicamento" />
                     </label>
-                    <label style="margin-top:8px">Informacao adicional
+                    <label style="margin-top:8px">Informação adicional
                         <textarea name="informacaoAdicional" rows="2"></textarea>
                     </label>
                 </div>
 
                 <div class="bloco">
-                    <h3>Inspecao geral</h3>
+                    <h3>Inspeção geral</h3>
                     <div class="grid-3">
                         <label>Temperatura<input type="text" name="temperatura" /></label>
                         <label>FC<input type="text" name="fc" /></label>
@@ -182,9 +182,9 @@ const Modais = (() => {
                 </div>
 
                 <div class="bloco">
-                    <h3>Diagnostico e conduta</h3>
-                    <label>Diagnostico<textarea name="diagnostico" rows="2"></textarea></label>
-                    <label style="margin-top:8px">Conduta clinica<textarea name="condutaClinica" rows="2"></textarea></label>
+                    <h3>Diagnóstico e conduta</h3>
+                    <label>Diagnóstico<textarea name="diagnostico" rows="2"></textarea></label>
+                    <label style="margin-top:8px">Conduta clínica<textarea name="condutaClinica" rows="2"></textarea></label>
                     <label style="margin-top:8px">Procedimentos realizados<textarea name="procedimentosRealizados" rows="2"></textarea></label>
                 </div>
 
@@ -246,7 +246,7 @@ const Modais = (() => {
         });
 
         abrir(`
-            <h2>Nova solicitacao de exames — ${paciente.nome}</h2>
+            <h2>Nova solicitação de exames — ${paciente.nome}</h2>
             <form id="form-solicitacao" class="form">
                 <label>Data
                     <input type="date" name="data" value="${new Date().toISOString().slice(0,10)}" />
@@ -261,7 +261,7 @@ const Modais = (() => {
                     <ul id="exames-selecionados" class="lista-itens"></ul>
                 </div>
 
-                <label>Motivos da solicitacao (suspeitas clinicas)
+                <label>Motivos da solicitação (suspeitas clínicas)
                     <textarea name="motivos" rows="3"></textarea>
                 </label>
 
@@ -366,7 +366,7 @@ const Modais = (() => {
                     <label>Cidade
                         <input type="text" name="cidade" placeholder="ex: Belo Horizonte" />
                     </label>
-                    <label>Data de emissao
+                    <label>Data de emissão
                         <input type="date" name="dataEmissao" value="${new Date().toISOString().slice(0,10)}" />
                     </label>
                 </div>
@@ -375,7 +375,7 @@ const Modais = (() => {
                     <select name="tipo" id="select-modelo">
                         ${modelos.map(m => `
                             <option value="${m.tipo}" data-conteudo="${m.conteudo.replace(/"/g,'&quot;')}">
-                                ${m.titulo}${m.padrao ? " (Padrao)" : ""}
+                                ${m.titulo}${m.padrao ? " (Padrão)" : ""}
                             </option>
                         `).join("")}
                     </select>
@@ -385,7 +385,7 @@ const Modais = (() => {
                     <textarea name="conteudo" rows="6">${modelos[0]?.conteudo || ""}</textarea>
                 </label>
 
-                <label>Identificacao complementar
+                <label>Identificação complementar
                     <textarea name="identificacaoComplementar" rows="2"></textarea>
                 </label>
 
@@ -453,37 +453,37 @@ const Modais = (() => {
 
             <div class="bloco">
                 <h3>Queixa principal</h3>
-                <p>${a.queixaPrincipal || "<em>nao informado</em>"}</p>
+                <p>${a.queixaPrincipal || "<em>não informado</em>"}</p>
             </div>
 
             <div class="bloco">
-                <h3>Historico do quadro clinico atual</h3>
-                ${linha("Inicio dos sintomas", a.inicioSintomas)}
-                ${linha("Possivel desencadeador", a.possivelDesencadeador)}
-                ${linha("Ja apresentou antes", a.jaApresentou)}
-                ${linha("Teve evolucao", a.teveEvolucao)}
-                ${linha("Evolucao", a.evolucao)}
+                <h3>Histórico do quadro clínico atual</h3>
+                ${linha("Início dos sintomas", a.inicioSintomas)}
+                ${linha("Possível desencadeador", a.possivelDesencadeador)}
+                ${linha("Já apresentou antes", a.jaApresentou)}
+                ${linha("Teve evolução", a.teveEvolucao)}
+                ${linha("Evolução", a.evolucao)}
                 ${linha("Usou medicamento", a.usouMedicamento)}
                 ${linha("Qual medicamento", a.qualMedicamento)}
                 ${linha("Contactante com mesmo quadro", a.contactanteMesmoQuadro)}
-                ${linha("Informacao adicional", a.informacaoAdicional)}
+                ${linha("Informação adicional", a.informacaoAdicional)}
             </div>
 
             <div class="bloco">
-                <h3>Historico clinico geral</h3>
-                ${listaCheck("Vacinacao", hc.vacinacao)}
-                ${linha("Vermifugacao", hc.vermifugacao)}
-                ${linha("Controle ectoparasitario", hc.controleEctoparasitario)}
-                ${linha("Doenca pre-existente", hc.doencaPreExistente)}
-                ${linha("Alimentacao", hc.alimentacao)}
-                ${linha("Ingestao hidrica", hc.ingestaoHidrica)}
-                ${linha("Ultimo cio", hc.ultimoCio)}
+                <h3>Histórico clínico geral</h3>
+                ${listaCheck("Vacinação", hc.vacinacao)}
+                ${linha("Vermifugação", hc.vermifugacao)}
+                ${linha("Controle ectoparasitário", hc.controleEctoparasitario)}
+                ${linha("Doença pré-existente", hc.doencaPreExistente)}
+                ${linha("Alimentação", hc.alimentacao)}
+                ${linha("Ingestão hídrica", hc.ingestaoHidrica)}
+                ${linha("Último cio", hc.ultimoCio)}
                 ${linha("Contactantes", hc.contactantes)}
                 ${linha("Teste FIV/FELV/Leishmaniose", hc.testeFivFelvLeishmaniose)}
             </div>
 
             <div class="bloco">
-                <h3>Inspecao geral</h3>
+                <h3>Inspeção geral</h3>
                 ${linha("Temperatura", ig.temperatura)}
                 ${linha("Escore corporal / peso", ig.escoreCorporalPeso)}
                 ${linha("Atividade", ig.atividade)}
@@ -493,7 +493,7 @@ const Modais = (() => {
                 ${linha("Comportamento", ig.comportamento)}
                 ${listaCheck("Gastrointestinal", ig.gastrointestinal)}
                 ${listaCheck("Urogenital", ig.urogenital)}
-                ${listaCheck("Neurologico", ig.neurologico)}
+                ${listaCheck("Neurológico", ig.neurologico)}
                 ${listaCheck("Olhos", ig.olhos)}
                 ${listaCheck("Ouvidos", ig.ouvidos)}
                 ${listaCheck("Locomotor", ig.locomotor)}
@@ -503,10 +503,10 @@ const Modais = (() => {
             </div>
 
             <div class="bloco">
-                <h3>Diagnostico e conduta</h3>
-                ${linha("Local da lesao", a.localLesao)}
-                ${linha("Diagnostico", a.diagnostico)}
-                ${linha("Conduta clinica", a.condutaClinica)}
+                <h3>Diagnóstico e conduta</h3>
+                ${linha("Local da lesão", a.localLesao)}
+                ${linha("Diagnóstico", a.diagnostico)}
+                ${linha("Conduta clínica", a.condutaClinica)}
                 ${linha("Procedimentos realizados", a.procedimentosRealizados)}
                 ${linha("Exames solicitados", a.examesSolicitadosTexto)}
                 ${linha("Extras", a.extras)}
@@ -526,7 +526,7 @@ const Modais = (() => {
             grupos[e.categoria].push(e);
         });
         abrir(`
-            <h2>Solicitacao de exames — ${formatarData(s.data)}</h2>
+            <h2>Solicitação de exames — ${formatarData(s.data)}</h2>
             ${Object.entries(grupos).map(([cat, itens]) => `
                 <div class="bloco">
                     <h3>${cat}</h3>
@@ -543,8 +543,8 @@ const Modais = (() => {
                 </div>
             `).join("")}
             <div class="bloco">
-                <h3>Motivos da solicitacao</h3>
-                <p>${s.motivos || "<em>nao informado</em>"}</p>
+                <h3>Motivos da solicitação</h3>
+                <p>${s.motivos || "<em>não informado</em>"}</p>
             </div>
             <div class="modal-acoes">
                 <button class="btn btn-secundario" data-fechar-modal>Fechar</button>
@@ -555,11 +555,11 @@ const Modais = (() => {
     async function verAtestado(id) {
         const a = await API.obterAtestado(id);
         const titulosTipo = {
-            TermoExames: "Termo para Realizacao de Exames",
-            TermoProcedimentoRisco: "Termo para Procedimento Terapeutico de Risco",
-            TermoObito: "Termo de Obito",
-            TermoEutanasia: "Termo para Realizacao de Eutanasia",
-            TermoCirurgico: "Termo para Procedimentos Cirurgicos",
+            TermoExames: "Termo para Realização de Exames",
+            TermoProcedimentoRisco: "Termo para Procedimento Terapêutico de Risco",
+            TermoObito: "Termo de Óbito",
+            TermoEutanasia: "Termo para Realização de Eutanásia",
+            TermoCirurgico: "Termo para Procedimentos Cirúrgicos",
             TermoRetiradaSemAlta: "Termo para Retirada sem Alta",
             AtestadoEncaminhamento: "Atestado de Encaminhamento"
         };
@@ -567,15 +567,15 @@ const Modais = (() => {
             <h2>${titulosTipo[a.tipo] || a.tipo}</h2>
             <div class="bloco">
                 ${linha("Cidade", a.cidade)}
-                ${linha("Data de emissao", formatarData(a.dataEmissao))}
+                ${linha("Data de emissão", formatarData(a.dataEmissao))}
             </div>
             <div class="bloco">
-                <h3>Conteudo</h3>
+                <h3>Conteúdo</h3>
                 <p style="white-space:pre-wrap">${a.conteudo || ""}</p>
             </div>
             ${a.identificacaoComplementar ? `
                 <div class="bloco">
-                    <h3>Identificacao complementar</h3>
+                    <h3>Identificação complementar</h3>
                     <p style="white-space:pre-wrap">${a.identificacaoComplementar}</p>
                 </div>
             ` : ""}

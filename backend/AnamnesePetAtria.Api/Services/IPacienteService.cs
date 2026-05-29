@@ -65,7 +65,7 @@ public class PacienteService : IPacienteService
     public async Task<PacienteResponse> CriarAsync(PacienteRequest req)
     {
         var tutor = await _db.Tutores.Find(t => t.Id == req.TutorId).FirstOrDefaultAsync()
-            ?? throw new InvalidOperationException("Tutor nao encontrado.");
+            ?? throw new InvalidOperationException("Tutor não encontrado.");
 
         var ultimoCodigo = await _db.Pacientes
             .Find(_ => true)
@@ -147,8 +147,8 @@ public class PacienteService : IPacienteService
         if (meses < 0) meses = 0;
         var anos = meses / 12;
         var mesesRest = meses % 12;
-        if (anos == 0) return $"{mesesRest} {(mesesRest == 1 ? "mes" : "meses")}";
+        if (anos == 0) return $"{mesesRest} {(mesesRest == 1 ? "mês" : "meses")}";
         if (mesesRest == 0) return $"{anos} {(anos == 1 ? "ano" : "anos")}";
-        return $"{anos} {(anos == 1 ? "ano" : "anos")} e {mesesRest} {(mesesRest == 1 ? "mes" : "meses")}";
+        return $"{anos} {(anos == 1 ? "ano" : "anos")} e {mesesRest} {(mesesRest == 1 ? "mês" : "meses")}";
     }
 }

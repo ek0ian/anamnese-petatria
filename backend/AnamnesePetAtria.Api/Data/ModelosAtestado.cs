@@ -13,40 +13,40 @@ public static class ModelosAtestado
     public static readonly List<Modelo> Itens = new()
     {
         new(TipoAtestado.TermoExames,
-            "Termo para Realizacao de Exames",
-            "Autorizo a realizacao dos exames complementares indicados pelo medico veterinario " +
-            "responsavel, estando ciente dos riscos inerentes ao procedimento e da necessidade clinica " +
-            "do mesmo para a investigacao diagnostica do animal."),
+            "Termo para Realização de Exames",
+            "Autorizo a realização dos exames complementares indicados pelo médico veterinário " +
+            "responsável, estando ciente dos riscos inerentes ao procedimento e da necessidade clínica " +
+            "do mesmo para a investigação diagnóstica do animal."),
 
         new(TipoAtestado.TermoProcedimentoRisco,
-            "Termo para Realizacao de Procedimento Terapeutico de Risco",
-            "Declaro estar ciente de que o procedimento terapeutico a ser realizado apresenta riscos, " +
-            "que foram detalhadamente explicados pelo medico veterinario, e autorizo sua execucao."),
+            "Termo para Realização de Procedimento Terapêutico de Risco",
+            "Declaro estar ciente de que o procedimento terapêutico a ser realizado apresenta riscos, " +
+            "que foram detalhadamente explicados pelo médico veterinário, e autorizo sua execução."),
 
         new(TipoAtestado.TermoObito,
-            "Termo de Obito",
-            "Atesto, na qualidade de medico veterinario, o obito do animal acima identificado em " +
-            "decorrencia das causas relacionadas no prontuario clinico."),
+            "Termo de Óbito",
+            "Atesto, na qualidade de médico veterinário, o óbito do animal acima identificado em " +
+            "decorrência das causas relacionadas no prontuário clínico."),
 
         new(TipoAtestado.TermoEutanasia,
-            "Termo para Realizacao de Eutanasia",
-            "Autorizo a realizacao do procedimento de eutanasia humanitaria, conforme indicacao " +
-            "tecnica do medico veterinario responsavel, mediante criterios de bem-estar animal."),
+            "Termo para Realização de Eutanásia",
+            "Autorizo a realização do procedimento de eutanásia humanitária, conforme indicação " +
+            "técnica do médico veterinário responsável, mediante critérios de bem-estar animal."),
 
         new(TipoAtestado.TermoCirurgico,
-            "Termo para Realizacao de Procedimentos Cirurgicos",
-            "Declaro estar ciente dos riscos inerentes ao procedimento cirurgico, a anestesia geral " +
-            "e ao pos-operatorio, autorizando sua realizacao."),
+            "Termo para Realização de Procedimentos Cirúrgicos",
+            "Declaro estar ciente dos riscos inerentes ao procedimento cirúrgico, à anestesia geral " +
+            "e ao pós-operatório, autorizando sua realização."),
 
         new(TipoAtestado.TermoRetiradaSemAlta,
-            "Termo para Retirada de Animal sem Alta Medica",
-            "Solicito a retirada do animal do servico veterinario, mesmo sem a alta medica, assumindo " +
-            "integralmente a responsabilidade pelos riscos decorrentes dessa decisao."),
+            "Termo para Retirada de Animal sem Alta Médica",
+            "Solicito a retirada do animal do serviço veterinário, mesmo sem a alta médica, assumindo " +
+            "integralmente a responsabilidade pelos riscos decorrentes dessa decisão."),
 
         new(TipoAtestado.AtestadoEncaminhamento,
             "Atestado de Encaminhamento",
-            "Encaminho o paciente ao colega especialista para avaliacao complementar, conforme " +
-            "necessidade clinica identificada no atendimento.")
+            "Encaminho o paciente ao colega especialista para avaliação complementar, conforme " +
+            "necessidade clínica identificada no atendimento.")
     };
 
     public static Modelo? Obter(TipoAtestado tipo) => Itens.FirstOrDefault(m => m.Tipo == tipo);

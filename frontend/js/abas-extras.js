@@ -31,7 +31,7 @@ const AbasExtras = (() => {
             tituloVer: "Vacina",
             colunas: v => ({
                 titulo: `${v.nome}${v.dose ? ` · ${v.dose}` : ""}`,
-                meta: `Aplicada em ${fmtData(v.dataAplicacao)}${v.proximaDose ? ` · proxima ${fmtData(v.proximaDose)}` : ""}`
+                meta: `Aplicada em ${fmtData(v.dataAplicacao)}${v.proximaDose ? ` · próxima ${fmtData(v.proximaDose)}` : ""}`
             }),
             form: v => `
                 <div class="grid-2">
@@ -39,10 +39,10 @@ const AbasExtras = (() => {
                     ${inputTexto("dose", v?.dose, "Dose")}
                     ${inputTexto("fabricante", v?.fabricante, "Fabricante")}
                     ${inputTexto("lote", v?.lote, "Lote")}
-                    ${inputDate("dataAplicacao", v?.dataAplicacao, "Data de aplicacao")}
-                    ${inputDate("proximaDose", v?.proximaDose, "Proxima dose")}
+                    ${inputDate("dataAplicacao", v?.dataAplicacao, "Data de aplicação")}
+                    ${inputDate("proximaDose", v?.proximaDose, "Próxima dose")}
                 </div>
-                ${inputArea("observacoes", v?.observacoes, "Observacoes")}
+                ${inputArea("observacoes", v?.observacoes, "Observações")}
             `,
             payload: (f, pacienteId) => ({
                 pacienteId,
@@ -59,19 +59,19 @@ const AbasExtras = (() => {
                 ${Modais.linha("Dose", v.dose)}
                 ${Modais.linha("Fabricante", v.fabricante)}
                 ${Modais.linha("Lote", v.lote)}
-                ${Modais.linha("Data de aplicacao", fmtData(v.dataAplicacao))}
-                ${v.proximaDose ? Modais.linha("Proxima dose", fmtData(v.proximaDose)) : ""}
-                ${Modais.linha("Observacoes", v.observacoes)}
+                ${Modais.linha("Data de aplicação", fmtData(v.dataAplicacao))}
+                ${v.proximaDose ? Modais.linha("Próxima dose", fmtData(v.proximaDose)) : ""}
+                ${Modais.linha("Observações", v.observacoes)}
             `
         },
 
         prescricoes: {
             recurso: "prescricoes",
-            tituloLista: "Prescricoes",
-            tituloNovo: "Nova prescricao",
-            tituloVer: "Prescricao",
+            tituloLista: "Prescrições",
+            tituloNovo: "Nova prescrição",
+            tituloVer: "Prescrição",
             colunas: p => ({
-                titulo: `Prescricao de ${fmtData(p.data)}`,
+                titulo: `Prescrição de ${fmtData(p.data)}`,
                 meta: `${(p.itens || []).length} medicamento(s)`
             }),
             form: p => `
@@ -83,7 +83,7 @@ const AbasExtras = (() => {
                     </div>
                     <button type="button" class="btn btn-secundario" id="btn-add-item">+ Adicionar medicamento</button>
                 </div>
-                ${inputArea("orientacoes", p?.orientacoes, "Orientacoes ao tutor")}
+                ${inputArea("orientacoes", p?.orientacoes, "Orientações ao tutor")}
             `,
             payload: (f, pacienteId) => {
                 const itens = [];
@@ -121,7 +121,7 @@ const AbasExtras = (() => {
                         `).join("")}
                     </ul>
                 </div>
-                ${Modais.linha("Orientacoes", p.orientacoes)}
+                ${Modais.linha("Orientações", p.orientacoes)}
             `,
             // Hook chamado depois que o form e renderizado.
             depoisDeAbrir: () => {
@@ -146,7 +146,7 @@ const AbasExtras = (() => {
                 ${inputDate("dataAgendada", r?.dataAgendada, "Data do retorno")}
                 ${inputArea("motivo", r?.motivo, "Motivo do retorno")}
                 <div class="checkbox-grupo">
-                    <label><input type="checkbox" name="realizado" ${r?.realizado ? "checked" : ""}/> Ja foi realizado</label>
+                    <label><input type="checkbox" name="realizado" ${r?.realizado ? "checked" : ""}/> Já foi realizado</label>
                 </div>
             `,
             payload: (f, pacienteId) => ({
@@ -167,10 +167,10 @@ const AbasExtras = (() => {
             ...null,
             recurso: "prescricoes",
             tituloLista: "Medicamentos prescritos",
-            tituloNovo: "Nova prescricao",
-            tituloVer: "Prescricao",
+            tituloNovo: "Nova prescrição",
+            tituloVer: "Prescrição",
             colunas: p => ({
-                titulo: `Prescricao de ${fmtData(p.data)}`,
+                titulo: `Prescrição de ${fmtData(p.data)}`,
                 meta: (p.itens || []).map(i => i.medicamento).join(", ") || "—"
             }),
             form: p => TIPOS.prescricoes.form(p),
@@ -191,7 +191,7 @@ const AbasExtras = (() => {
             form: p => `
                 ${inputTexto("nome", p?.nome, "Nome do procedimento")}
                 ${inputDate("data", p?.data, "Data")}
-                ${inputArea("descricao", p?.descricao, "Descricao")}
+                ${inputArea("descricao", p?.descricao, "Descrição")}
             `,
             payload: (f, pacienteId) => ({
                 pacienteId,
@@ -202,7 +202,7 @@ const AbasExtras = (() => {
             detalhe: p => `
                 ${Modais.linha("Nome", p.nome)}
                 ${Modais.linha("Data", fmtData(p.data))}
-                ${Modais.linha("Descricao", p.descricao)}
+                ${Modais.linha("Descrição", p.descricao)}
             `
         },
 
@@ -225,7 +225,7 @@ const AbasExtras = (() => {
                         <option value="cancelada" ${c?.status === "cancelada" ? "selected" : ""}>Cancelada</option>
                     </select>
                 </label>
-                ${inputArea("observacoes", c?.observacoes, "Observacoes")}
+                ${inputArea("observacoes", c?.observacoes, "Observações")}
             `,
             payload: (f, pacienteId) => ({
                 pacienteId,
@@ -238,24 +238,24 @@ const AbasExtras = (() => {
                 ${Modais.linha("Tipo", c.tipo)}
                 ${Modais.linha("Data agendada", fmtData(c.dataAgendada))}
                 ${Modais.linha("Status", c.status)}
-                ${Modais.linha("Observacoes", c.observacoes)}
+                ${Modais.linha("Observações", c.observacoes)}
             `
         },
 
         internacoes: {
             recurso: "internacoes",
-            tituloLista: "Internacoes",
-            tituloNovo: "Nova internacao",
-            tituloVer: "Internacao",
+            tituloLista: "Internações",
+            tituloNovo: "Nova internação",
+            tituloVer: "Internação",
             colunas: i => ({
                 titulo: `${fmtData(i.entrada)} → ${i.saida ? fmtData(i.saida) : "internado"}`,
                 meta: i.motivo || "—"
             }),
             form: i => `
                 ${inputDate("entrada", i?.entrada, "Entrada")}
-                ${inputDate("saida", i?.saida, "Saida (deixe vazio se ainda internado)")}
+                ${inputDate("saida", i?.saida, "Saída (deixe vazio se ainda internado)")}
                 ${inputArea("motivo", i?.motivo, "Motivo")}
-                ${inputArea("evolucao", i?.evolucao, "Evolucao")}
+                ${inputArea("evolucao", i?.evolucao, "Evolução")}
             `,
             payload: (f, pacienteId) => ({
                 pacienteId,
@@ -266,19 +266,19 @@ const AbasExtras = (() => {
             }),
             detalhe: i => `
                 ${Modais.linha("Entrada", fmtData(i.entrada))}
-                ${Modais.linha("Saida", i.saida ? fmtData(i.saida) : "Ainda internado")}
+                ${Modais.linha("Saída", i.saida ? fmtData(i.saida) : "Ainda internado")}
                 ${Modais.linha("Motivo", i.motivo)}
-                ${Modais.linha("Evolucao", i.evolucao)}
+                ${Modais.linha("Evolução", i.evolucao)}
             `
         },
 
         orcamentos: {
             recurso: "orcamentos",
-            tituloLista: "Orcamentos",
-            tituloNovo: "Novo orcamento",
-            tituloVer: "Orcamento",
+            tituloLista: "Orçamentos",
+            tituloNovo: "Novo orçamento",
+            tituloVer: "Orçamento",
             colunas: o => ({
-                titulo: `Orcamento de ${fmtData(o.data)}`,
+                titulo: `Orçamento de ${fmtData(o.data)}`,
                 meta: `R$ ${(o.total || 0).toFixed(2).replace(".", ",")} · ${o.aprovado ? "Aprovado" : "Pendente"}`
             }),
             form: o => `
@@ -291,7 +291,7 @@ const AbasExtras = (() => {
                     <button type="button" class="btn btn-secundario" id="btn-add-item-orc">+ Adicionar item</button>
                 </div>
                 <div class="checkbox-grupo">
-                    <label><input type="checkbox" name="aprovado" ${o?.aprovado ? "checked" : ""}/> Orcamento aprovado pelo tutor</label>
+                    <label><input type="checkbox" name="aprovado" ${o?.aprovado ? "checked" : ""}/> Orçamento aprovado pelo tutor</label>
                 </div>
             `,
             payload: (f, pacienteId) => {
@@ -344,9 +344,9 @@ const AbasExtras = (() => {
                     <label>Medicamento<input type="text" name="medicamento" value="${it.medicamento || ""}" /></label>
                     <label>Dose<input type="text" name="dose" value="${it.dose || ""}" /></label>
                     <label>Via<input type="text" name="via" placeholder="oral, SC, IM..." value="${it.via || ""}" /></label>
-                    <label>Frequencia<input type="text" name="frequencia" value="${it.frequencia || ""}" /></label>
+                    <label>Frequência<input type="text" name="frequencia" value="${it.frequencia || ""}" /></label>
                 </div>
-                <label style="margin-top:8px">Duracao<input type="text" name="duracao" value="${it.duracao || ""}" /></label>
+                <label style="margin-top:8px">Duração<input type="text" name="duracao" value="${it.duracao || ""}" /></label>
             </div>
         `;
     }
@@ -355,7 +355,7 @@ const AbasExtras = (() => {
         return `
             <div class="item-orcamento" style="border:1px solid var(--borda);border-radius:8px;padding:10px;margin-bottom:8px">
                 <div class="grid-3">
-                    <label>Descricao<input type="text" name="descricao" value="${it.descricao || ""}" /></label>
+                    <label>Descrição<input type="text" name="descricao" value="${it.descricao || ""}" /></label>
                     <label>Qtd<input type="number" name="quantidade" min="1" value="${it.quantidade || 1}" /></label>
                     <label>Valor unit.<input type="number" name="valorUnitario" step="0.01" min="0" value="${it.valorUnitario || ""}" /></label>
                 </div>
@@ -367,7 +367,7 @@ const AbasExtras = (() => {
 
     async function renderAba(aba, paciente) {
         const tipo = TIPOS[aba];
-        if (!tipo) return `<p class="vazio">Aba nao implementada.</p>`;
+        if (!tipo) return `<p class="vazio">Aba não implementada.</p>`;
 
         const lista = await API.listar(tipo.recurso, paciente.id).catch(() => []);
         const itens = lista.length === 0
@@ -409,7 +409,7 @@ const AbasExtras = (() => {
         document.querySelectorAll("[data-deletar]").forEach(btn => {
             btn.addEventListener("click", async e => {
                 e.stopPropagation();
-                if (!confirm("Excluir este registro? Esta acao nao pode ser desfeita.")) return;
+                if (!confirm("Excluir este registro? Esta ação não pode ser desfeita.")) return;
                 try {
                     await API.remover(TIPOS[btn.dataset.deletar].recurso, btn.dataset.id);
                     Abas.trocar(btn.dataset.deletar);

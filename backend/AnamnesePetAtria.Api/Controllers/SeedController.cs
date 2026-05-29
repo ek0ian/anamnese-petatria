@@ -21,7 +21,7 @@ public class SeedController : ControllerBase
     {
         var jaTem = await _db.Pacientes.Find(_ => true).AnyAsync();
         if (jaTem)
-            return BadRequest(new { erro = "O banco ja possui dados. Limpe-o antes de popular novamente." });
+            return BadRequest(new { erro = "O banco já possui dados. Limpe-o antes de popular novamente." });
 
         // ===== Tutores =====
         var tCamila = new Tutor { Nome = "Camila Rosa", Telefone = "(31) 99876-5432", Email = "camila.rosa@example.com", Cpf = "111.222.333-44" };
@@ -56,32 +56,32 @@ public class SeedController : ControllerBase
             new Anamnese
             {
                 PacienteId = pMarley.Id!,
-                QueixaPrincipal = "Tutor relata episodios de vomito ha 3 dias e apatia.",
-                InicioSintomas = "Ha 3 dias",
-                PossivelDesencadeador = "Ingestao de racao nova",
+                QueixaPrincipal = "Tutor relata episódios de vômito há 3 dias e apatia.",
+                InicioSintomas = "Há 3 dias",
+                PossivelDesencadeador = "Ingestão de ração nova",
                 JaApresentou = false,
                 TeveEvolucao = true, Evolucao = "piora",
                 UsouMedicamento = false,
                 Diagnostico = "Gastrite aguda, possivelmente alergia alimentar.",
-                CondutaClinica = "Dieta de eliminacao + antiemetico. Reavaliacao em 7 dias.",
+                CondutaClinica = "Dieta de eliminação + antiemético. Reavaliação em 7 dias.",
                 InspecaoGeral = new InspecaoGeral
                 {
                     Temperatura = "38.9 C", Fc = "120 bpm", Fr = "24 mrpm",
                     Tpc = "<2s", Mucosas = "normocoradas", Atividade = "prostrado",
-                    Gastrointestinal = new() { "Vomito" }
+                    Gastrointestinal = new() { "Vômito" }
                 }
             },
             new Anamnese
             {
                 PacienteId = pNina.Id!,
-                QueixaPrincipal = "Espirros frequentes e secrecao nasal ha 5 dias.",
-                InicioSintomas = "Ha 5 dias", JaApresentou = true, TeveEvolucao = false,
-                Diagnostico = "Rinotraqueite felina (suspeita).",
-                CondutaClinica = "Solicitar PCR para herpesvirus felino. Suporte com nebulizacao.",
+                QueixaPrincipal = "Espirros frequentes e secreção nasal há 5 dias.",
+                InicioSintomas = "Há 5 dias", JaApresentou = true, TeveEvolucao = false,
+                Diagnostico = "Rinotraqueíte felina (suspeita).",
+                CondutaClinica = "Solicitar PCR para herpesvírus felino. Suporte com nebulização.",
                 InspecaoGeral = new InspecaoGeral
                 {
                     Temperatura = "39.4 C", Fc = "180 bpm", Fr = "32 mrpm",
-                    Nariz = new() { "Espirros", "Secrecao" }
+                    Nariz = new() { "Espirros", "Secreção" }
                 }
             }
         });
@@ -89,9 +89,9 @@ public class SeedController : ControllerBase
         // ===== Vacinas =====
         await _db.Vacinas.InsertManyAsync(new[]
         {
-            new Vacina { PacienteId = pMarley.Id!, Nome = "V10 (Polivalente canina)", Fabricante = "Zoetis", Lote = "L2024-A", Dose = "Reforco anual", DataAplicacao = new DateTime(2025, 8, 10), ProximaDose = new DateTime(2026, 8, 10) },
-            new Vacina { PacienteId = pMarley.Id!, Nome = "Antirrabica", Fabricante = "MSD", Lote = "AR-883", Dose = "Anual", DataAplicacao = new DateTime(2025, 8, 10), ProximaDose = new DateTime(2026, 8, 10) },
-            new Vacina { PacienteId = pNina.Id!, Nome = "V4 felina", Fabricante = "Zoetis", Lote = "F-221", Dose = "Reforco", DataAplicacao = new DateTime(2025, 11, 2), ProximaDose = new DateTime(2026, 11, 2) }
+            new Vacina { PacienteId = pMarley.Id!, Nome = "V10 (Polivalente canina)", Fabricante = "Zoetis", Lote = "L2024-A", Dose = "Reforço anual", DataAplicacao = new DateTime(2025, 8, 10), ProximaDose = new DateTime(2026, 8, 10) },
+            new Vacina { PacienteId = pMarley.Id!, Nome = "Antirrábica", Fabricante = "MSD", Lote = "AR-883", Dose = "Anual", DataAplicacao = new DateTime(2025, 8, 10), ProximaDose = new DateTime(2026, 8, 10) },
+            new Vacina { PacienteId = pNina.Id!, Nome = "V4 felina", Fabricante = "Zoetis", Lote = "F-221", Dose = "Reforço", DataAplicacao = new DateTime(2025, 11, 2), ProximaDose = new DateTime(2026, 11, 2) }
         });
 
         // ===== Exames =====
@@ -101,13 +101,13 @@ public class SeedController : ControllerBase
             {
                 PacienteId = pMarley.Id!,
                 Data = DateTime.UtcNow.AddDays(-2),
-                Motivos = "Investigar quadro gastrointestinal e descartar causas hepaticas/renais.",
+                Motivos = "Investigar quadro gastrointestinal e descartar causas hepáticas/renais.",
                 Exames = new()
                 {
                     new ItemExame { Categoria = "Hematologia", Nome = "Hemograma completo" },
                     new ItemExame
                     {
-                        Categoria = "Bioquimico", Nome = "Perfil Bioquimico completo",
+                        Categoria = "Bioquímico", Nome = "Perfil Bioquímico completo",
                         Parametros = new() { "Ureia", "Creatinina", "ALT", "AST", "FA", "Glicose" }
                     }
                 }
@@ -134,7 +134,7 @@ public class SeedController : ControllerBase
             {
                 PacienteId = pMarley.Id!,
                 Data = DateTime.UtcNow.AddDays(-2),
-                Orientacoes = "Administrar com o estomago vazio. Retornar em 7 dias.",
+                Orientacoes = "Administrar com o estômago vazio. Retornar em 7 dias.",
                 Itens = new()
                 {
                     new ItemPrescricao { Medicamento = "Maropitant", Dose = "1mg/kg", Via = "Oral", Frequencia = "1x ao dia", Duracao = "5 dias" },
@@ -146,7 +146,7 @@ public class SeedController : ControllerBase
         // ===== Retornos =====
         await _db.Retornos.InsertManyAsync(new[]
         {
-            new Retorno { PacienteId = pMarley.Id!, DataAgendada = DateTime.UtcNow.AddDays(5), Motivo = "Reavaliacao apos tratamento gastrico." },
+            new Retorno { PacienteId = pMarley.Id!, DataAgendada = DateTime.UtcNow.AddDays(5), Motivo = "Reavaliação após tratamento gástrico." },
             new Retorno { PacienteId = pNina.Id!, DataAgendada = DateTime.UtcNow.AddDays(7), Motivo = "Resultado de PCR herpes." }
         });
 
