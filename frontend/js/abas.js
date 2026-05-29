@@ -4,7 +4,7 @@
 
 const Abas = (() => {
     let pacienteAtual = null;
-    let abaAtual = "anamnese";
+    let abaAtual = "historico";
 
     function init() {
         document.querySelectorAll(".aba").forEach(btn => {
@@ -41,9 +41,13 @@ const Abas = (() => {
         }
     }
 
-    // Renderers retornam HTML como string. Integracao real com a API
-    // (criar/editar/listar dinamicamente) entra no proximo commit.
+    // Renderers retornam HTML como string.
     const renderers = {
+        async historico(p) {
+            return typeof Timeline !== "undefined"
+                ? await Timeline.renderAba(p)
+                : `<p class="vazio">Timeline indisponível.</p>`;
+        },
         async anamnese(p) {
             const lista = await API.listarAnamneses(p.id).catch(() => []);
             const itens = lista.length === 0
@@ -160,6 +164,9 @@ const Abas = (() => {
 
     // Handlers que precisam ser ligados depois do innerHTML.
     const enhancers = {
+        historico(p) {
+            if (typeof Timeline !== "undefined") Timeline.ligarHandlers(p);
+        },
         anamnese(p) {
             document.getElementById("btn-nova-anamnese")?.addEventListener("click",
                 () => Modais.novaAnamnese(p));
