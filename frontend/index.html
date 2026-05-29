@@ -101,6 +101,12 @@
         <main class="layout">
             <aside class="lista-pacientes" id="lista-pacientes">
                 <div class="lista-header">Pacientes</div>
+                <div class="filtros-sidebar">
+                    <button class="chip ativo" data-filtro-especie="todos">Todos</button>
+                    <button class="chip" data-filtro-especie="Canino" title="Caninos">🐕 Cães</button>
+                    <button class="chip" data-filtro-especie="Felino" title="Felinos">🐈 Gatos</button>
+                    <button class="chip" data-filtro-especie="Outro" title="Outras espécies">🐾 Outros</button>
+                </div>
                 <ul id="ul-pacientes"></ul>
             </aside>
 

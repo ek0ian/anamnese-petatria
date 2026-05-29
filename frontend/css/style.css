@@ -346,6 +346,38 @@ a:hover { text-decoration: underline; }
     letter-spacing: 0.5px;
 }
 
+.filtros-sidebar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--borda);
+    flex-wrap: wrap;
+    background: var(--creme-claro);
+}
+
+.chip {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--branco);
+    color: var(--texto-suave);
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--borda);
+    transition: all 0.12s;
+    white-space: nowrap;
+}
+
+.chip:hover {
+    border-color: var(--roxo-claro);
+    color: var(--roxo-escuro);
+}
+
+.chip.ativo {
+    background: var(--roxo-escuro);
+    color: var(--branco);
+    border-color: var(--roxo-escuro);
+}
+
 .lista-pacientes ul {
     list-style: none;
     overflow-y: auto;
