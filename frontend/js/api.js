@@ -87,6 +87,9 @@ const API = (() => {
         obterAtestado: (id) => req("GET", `/atestados/${id}`),
         criarAtestado: (payload) => req("POST", "/atestados", payload),
 
+        // Seed (popula dados de exemplo)
+        seed: () => req("POST", "/seed"),
+
         // CRUD generico por recurso (vacinas, prescricoes, retornos, etc).
         listar: (recurso, pacienteId) => req("GET", `/${recurso}/paciente/${pacienteId}`),
         obter: (recurso, id) => req("GET", `/${recurso}/${id}`),
