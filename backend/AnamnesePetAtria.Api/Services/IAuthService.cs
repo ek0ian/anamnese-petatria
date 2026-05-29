@@ -28,14 +28,14 @@ public class AuthService : IAuthService
     {
         var existente = await _db.Usuarios.Find(u => u.Email == req.Email).FirstOrDefaultAsync();
         if (existente is not null)
-            throw new InvalidOperationException("Ja existe um usuario com esse e-mail.");
+            throw new InvalidOperationException("Já existe um usuário com esse e-mail.");
 
         var perfil = req.Perfil switch
         {
             Perfis.Admin => Perfis.Admin,
             Perfis.Veterinario => Perfis.Veterinario,
             null or "" => Perfis.Veterinario,
-            _ => throw new InvalidOperationException("Perfil invalido. Use 'admin' ou 'veterinario'.")
+            _ => throw new InvalidOperationException("Perfil inválido. Use 'admin' ou 'veterinario'.")
         };
 
         var usuario = new Usuario

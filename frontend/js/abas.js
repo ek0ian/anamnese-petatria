@@ -70,7 +70,7 @@ const Abas = (() => {
         async exames(p) {
             const lista = await API.listarExames(p.id).catch(() => []);
             const itens = lista.length === 0
-                ? `<p class="vazio">Nenhuma solicitacao de exames.</p>`
+                ? `<p class="vazio">Nenhuma solicitação de exames.</p>`
                 : `<ul class="lista-itens">${lista.map(s => `
                     <li class="clicavel" data-ver="exame" data-id="${s.id}">
                         <div class="item-info">
@@ -85,7 +85,7 @@ const Abas = (() => {
             return `
                 <div class="toolbar-aba">
                     <h3>Exames solicitados</h3>
-                    <button class="btn btn-primary" id="btn-nova-solicitacao">+ Nova solicitacao</button>
+                    <button class="btn btn-primary" id="btn-nova-solicitacao">+ Nova solicitação</button>
                 </div>
                 ${itens}
             `;
@@ -121,7 +121,7 @@ const Abas = (() => {
             return `
                 <div class="bloco">
                     <h3>Em desenvolvimento</h3>
-                    <p>Modulo "${abaAtual}" disponivel apenas via API neste momento.</p>
+                    <p>Módulo "${abaAtual}" disponível apenas via API neste momento.</p>
                 </div>
             `;
         }
@@ -143,7 +143,7 @@ const Abas = (() => {
         document.querySelectorAll("[data-deletar-fixo]").forEach(btn => {
             btn.addEventListener("click", async e => {
                 e.stopPropagation();
-                if (!confirm("Excluir este registro? Esta acao nao pode ser desfeita.")) return;
+                if (!confirm("Excluir este registro? Esta ação não pode ser desfeita.")) return;
                 const li = btn.closest("[data-ver]");
                 const recurso = recursoPorTipo[li.dataset.ver];
                 try {
@@ -194,11 +194,11 @@ const Abas = (() => {
 
     function formatarTipo(t) {
         return ({
-            TermoExames: "Termo para Realizacao de Exames",
-            TermoProcedimentoRisco: "Termo para Procedimento Terapeutico de Risco",
-            TermoObito: "Termo de Obito",
-            TermoEutanasia: "Termo para Realizacao de Eutanasia",
-            TermoCirurgico: "Termo para Procedimentos Cirurgicos",
+            TermoExames: "Termo para Realização de Exames",
+            TermoProcedimentoRisco: "Termo para Procedimento Terapêutico de Risco",
+            TermoObito: "Termo de Óbito",
+            TermoEutanasia: "Termo para Realização de Eutanásia",
+            TermoCirurgico: "Termo para Procedimentos Cirúrgicos",
             TermoRetiradaSemAlta: "Termo para Retirada sem Alta",
             AtestadoEncaminhamento: "Atestado de Encaminhamento"
         })[t] || t;

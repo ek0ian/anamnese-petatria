@@ -25,7 +25,7 @@ public class ServicoPaciente<T> where T : EntidadeBase, IEntidadePaciente
     public async Task<T> CriarAsync(T entidade)
     {
         if (string.IsNullOrWhiteSpace(entidade.PacienteId))
-            throw new InvalidOperationException("PacienteId eh obrigatorio.");
+            throw new InvalidOperationException("PacienteId é obrigatório.");
 
         entidade.CriadoEm = DateTime.UtcNow;
         await _col.InsertOneAsync(entidade);

@@ -36,7 +36,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest req)
     {
         var resp = await _auth.LoginAsync(req);
-        if (resp is null) return Unauthorized(new { erro = "Credenciais invalidas." });
+        if (resp is null) return Unauthorized(new { erro = "Credenciais inválidas." });
         return Ok(resp);
     }
 }

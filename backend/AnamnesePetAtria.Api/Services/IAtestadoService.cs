@@ -32,7 +32,7 @@ public class AtestadoService : IAtestadoService
     public async Task<AtestadoTermo> CriarAsync(AtestadoTermo atestado)
     {
         if (string.IsNullOrWhiteSpace(atestado.PacienteId))
-            throw new InvalidOperationException("PacienteId eh obrigatorio.");
+            throw new InvalidOperationException("PacienteId é obrigatório.");
         if (string.IsNullOrWhiteSpace(atestado.Conteudo))
         {
             // Se nao veio conteudo, usa o modelo padrao do tipo.

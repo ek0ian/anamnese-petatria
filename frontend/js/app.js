@@ -18,7 +18,7 @@ const App = (() => {
         if (!confirm("Carregar dados de exemplo? Funciona apenas se o banco estiver vazio.")) return;
         try {
             const r = await API.seed();
-            alert(`OK!\n\n${r.pacientes} pacientes, ${r.anamneses} anamneses, ${r.vacinas} vacinas, ${r.exames} exames, ${r.atestados} atestados, ${r.prescricoes} prescricoes e ${r.retornos} retornos foram criados.`);
+            alert(`OK!\n\n${r.pacientes} pacientes, ${r.anamneses} anamneses, ${r.vacinas} vacinas, ${r.exames} exames, ${r.atestados} atestados, ${r.prescricoes} prescrições e ${r.retornos} retornos foram criados.`);
             carregarPacientes();
         } catch (ex) {
             alert(ex.message);
