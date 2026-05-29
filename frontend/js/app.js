@@ -4,6 +4,8 @@
 const App = (() => {
     let pacienteSelecionado = null;
     let timerBusca = null;
+    let filtroEspecie = "todos";
+    let listaCompleta = [];
 
     function iniciar() {
         Abas.init();
@@ -11,7 +13,18 @@ const App = (() => {
         document.getElementById("btn-novo-paciente").addEventListener("click", () => Modais.novoPaciente());
         document.getElementById("btn-whatsapp").addEventListener("click", abrirWhatsapp);
         document.getElementById("btn-seed").addEventListener("click", carregarSeed);
+        document.querySelectorAll("[data-filtro-especie]").forEach(btn => {
+            btn.addEventListener("click", () => trocarFiltroEspecie(btn.dataset.filtroEspecie));
+        });
         carregarPacientes();
+    }
+
+    function trocarFiltroEspecie(especie) {
+        filtroEspecie = especie;
+        document.querySelectorAll("[data-filtro-especie]").forEach(btn => {
+            btn.classList.toggle("ativo", btn.dataset.filtroEspecie === especie);
+        });
+        renderListaFiltrada();
     }
 
     async function carregarSeed() {
@@ -38,23 +51,32 @@ const App = (() => {
         const ul = document.getElementById("ul-pacientes");
         ul.innerHTML = `<li class="vazio" style="padding:14px">Carregando...</li>`;
         try {
-            const lista = await API.listarPacientes(busca);
-            if (lista.length === 0) {
-                ul.innerHTML = `<li class="vazio" style="padding:14px">Nenhum paciente encontrado.</li>`;
-                return;
-            }
-            ul.innerHTML = lista.map(p => `
-                <li data-id="${p.id}">
-                    <div class="li-nome">${p.nome}</div>
-                    <div class="li-meta">ID ${p.codigo} · ${p.raca || p.especie} · ${p.tutorNome || ""}</div>
-                </li>
-            `).join("");
-            ul.querySelectorAll("li[data-id]").forEach(li => {
-                li.addEventListener("click", () => selecionar(li.dataset.id));
-            });
+            listaCompleta = await API.listarPacientes(busca);
+            renderListaFiltrada();
         } catch (ex) {
             ul.innerHTML = `<li class="msg-erro" style="margin:14px">${ex.message}</li>`;
         }
+    }
+
+    function renderListaFiltrada() {
+        const ul = document.getElementById("ul-pacientes");
+        const lista = filtroEspecie === "todos"
+            ? listaCompleta
+            : listaCompleta.filter(p => p.especie === filtroEspecie);
+
+        if (lista.length === 0) {
+            ul.innerHTML = `<li class="vazio" style="padding:14px">Nenhum paciente encontrado.</li>`;
+            return;
+        }
+        ul.innerHTML = lista.map(p => `
+            <li data-id="${p.id}">
+                <div class="li-nome">${p.nome}</div>
+                <div class="li-meta">ID ${p.codigo} · ${p.raca || p.especie} · ${p.tutorNome || ""}</div>
+            </li>
+        `).join("");
+        ul.querySelectorAll("li[data-id]").forEach(li => {
+            li.addEventListener("click", () => selecionar(li.dataset.id));
+        });
     }
 
     function onBusca(e) {
