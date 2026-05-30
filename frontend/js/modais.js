@@ -554,6 +554,7 @@ const Modais = (() => {
 
     async function verAtestado(id) {
         const a = await API.obterAtestado(id);
+        const paciente = await API.obterPaciente(a.pacienteId).catch(() => null);
         const titulosTipo = {
             TermoExames: "Termo para Realização de Exames",
             TermoProcedimentoRisco: "Termo para Procedimento Terapêutico de Risco",
@@ -581,9 +582,19 @@ const Modais = (() => {
             ` : ""}
             <div class="modal-acoes">
                 <button class="btn btn-secundario" data-fechar-modal>Fechar</button>
-                <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+                <button class="btn btn-secundario" id="btn-imprimir-atestado">Imprimir</button>
+                <button class="btn btn-primary" id="btn-pdf-atestado">📄 Baixar PDF</button>
             </div>
         `);
+
+        document.getElementById("btn-imprimir-atestado").addEventListener("click", () => window.print());
+        document.getElementById("btn-pdf-atestado").addEventListener("click", () => {
+            if (!paciente) {
+                alert("Não foi possível carregar os dados do paciente para gerar o PDF.");
+                return;
+            }
+            PDFAtestado.gerar(a, paciente);
+        });
     }
 
     return {
