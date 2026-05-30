@@ -661,6 +661,144 @@ a:hover { text-decoration: underline; }
     -webkit-box-orient: vertical;
 }
 
+/* ========= Ficha de anamnese (modelo Camila Rosa) ========= */
+.ficha-form .bloco-ficha {
+    background: var(--branco);
+    border-left: 4px solid var(--roxo-escuro);
+    border-radius: var(--raio);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra-leve);
+}
+
+.ficha-form .bloco-ficha h3 {
+    color: var(--roxo-escuro);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.ficha-linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--borda);
+}
+
+.ficha-linha:last-child { border-bottom: none; }
+
+.ficha-linha-compacta { padding: 4px 0; }
+
+.ficha-rotulo {
+    min-width: 200px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    font-weight: 500;
+}
+
+.ficha-opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    flex: 1;
+    align-items: center;
+}
+
+/* Bolinha estilo PDF para radio e checkbox */
+.opcao-circulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--texto);
+    cursor: pointer;
+    user-select: none;
+    font-weight: normal !important;
+    flex-direction: row !important;
+}
+
+.opcao-circulo input[type="radio"],
+.opcao-circulo input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.circulo {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--roxo-claro);
+    background: var(--branco);
+    flex-shrink: 0;
+    transition: all 0.1s;
+    position: relative;
+}
+
+.opcao-circulo input:checked + .circulo {
+    border-color: var(--roxo-escuro);
+    background: var(--roxo-escuro);
+    box-shadow: inset 0 0 0 2px var(--branco);
+}
+
+.opcao-circulo:hover .circulo {
+    border-color: var(--roxo-escuro);
+}
+
+.opcao-outros {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    flex: 1;
+    min-width: 180px;
+}
+
+.opcao-outros input[type="text"] {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid var(--borda);
+    border-radius: 0;
+    padding: 2px 4px;
+    background: transparent;
+    font-size: 13px;
+}
+
+.opcao-outros input[type="text"]:focus {
+    outline: none;
+    border-bottom-color: var(--roxo-escuro);
+    box-shadow: none;
+}
+
+.ficha-input-inline {
+    border: none !important;
+    border-bottom: 1px solid var(--borda) !important;
+    border-radius: 0 !important;
+    padding: 2px 4px !important;
+    background: transparent !important;
+    font-size: 13px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.ficha-input-inline:focus {
+    outline: none !important;
+    border-bottom-color: var(--roxo-escuro) !important;
+    box-shadow: none !important;
+}
+
+.ficha-form textarea {
+    width: 100%;
+    background: var(--creme-claro);
+    border: 1px solid var(--borda);
+}
+
 .toolbar-aba {
     display: flex;
     justify-content: space-between;

@@ -56,32 +56,72 @@ public class SeedController : ControllerBase
             new Anamnese
             {
                 PacienteId = pMarley.Id!,
+                Responsavel = tCamila.Nome,
+                CpfResponsavel = tCamila.Cpf,
+                TelefoneResponsavel = tCamila.Telefone,
                 QueixaPrincipal = "Tutor relata episódios de vômito há 3 dias e apatia.",
-                InicioSintomas = "Há 3 dias",
-                PossivelDesencadeador = "Ingestão de ração nova",
-                JaApresentou = false,
-                TeveEvolucao = true, Evolucao = "piora",
-                UsouMedicamento = false,
-                Diagnostico = "Gastrite aguda, possivelmente alergia alimentar.",
+                AnamneseTexto = "Animal apresentou vômito agudo após introdução de ração nova. " +
+                                "Sem febre. Apatia leve e diminuição da ingestão hídrica.",
+                DoencasPregressas = false,
+                DoencasPresentes = true,
+                DoencasPresentesDescricao = "Gastrite aguda em investigação",
+                SistemaDigestorio = new() { "Vômito" },
+                Alimentacao = "Hiporexia",
+                IngestaoAgua = "Oligodipsia",
+                Ambiente = new() { "Urbano" },
                 CondutaClinica = "Dieta de eliminação + antiemético. Reavaliação em 7 dias.",
-                InspecaoGeral = new InspecaoGeral
+                TratamentosExamesSolicitados = "Hemograma + perfil bioquímico básico.",
+                Retorno = "Em 7 dias para reavaliação.",
+                HistoricoClinico = new HistoricoClinico
                 {
-                    Temperatura = "38.9 C", Fc = "120 bpm", Fr = "24 mrpm",
-                    Tpc = "<2s", Mucosas = "normocoradas", Atividade = "prostrado",
-                    Gastrointestinal = new() { "Vômito" }
+                    Vacinacao = true, VacinacaoData = "08/2025", VacinacaoQuais = "V10 + Antirrábica",
+                    ControleEndoparasitoses = true, ControleEndoparasitosesData = "01/2026", ControleEndoparasitosesQuais = "Drontal Plus",
+                    ControleEctoparasitoses = true, ControleEctoparasitosesData = "04/2026", ControleEctoparasitosesQuais = "NexGard",
+                    UsoMedicacao = false,
+                    RealizouCirurgias = true, RealizouCirurgiasDescricao = "Castração em 2017",
+                    AlergiaMedicamentos = false
+                },
+                ParametrosClinicos = new Dictionary<string, ParametroClinico>
+                {
+                    ["hidratacao"] = new() { Status = "Alterada", Descricao = "Levemente desidratado (~5%)" },
+                    ["temperatura"] = new() { Status = "Normal", Descricao = "38.9 °C" },
+                    ["mucosa"] = new() { Status = "Normal", Descricao = "Normocoradas" },
+                    ["frequenciaCardiaca"] = new() { Status = "Normal", Descricao = "120 bpm" },
+                    ["frequenciaRespiratoria"] = new() { Status = "Normal", Descricao = "24 mrpm" },
+                    ["palpacaoAbdominal"] = new() { Status = "Alterada", Descricao = "Sensibilidade em epigástrio" }
                 }
             },
             new Anamnese
             {
                 PacienteId = pNina.Id!,
+                Responsavel = tJoao.Nome,
+                CpfResponsavel = tJoao.Cpf,
+                TelefoneResponsavel = tJoao.Telefone,
                 QueixaPrincipal = "Espirros frequentes e secreção nasal há 5 dias.",
-                InicioSintomas = "Há 5 dias", JaApresentou = true, TeveEvolucao = false,
-                Diagnostico = "Rinotraqueíte felina (suspeita).",
+                AnamneseTexto = "Animal com sintomas respiratórios há 5 dias. Apetite preservado.",
+                DoencasPregressas = true,
+                DoencasPregressasDescricao = "Quadro respiratório recorrente",
+                DoencasPresentes = true,
+                DoencasPresentesDescricao = "Suspeita de rinotraqueíte felina",
+                SistemaCardiorrespiratorio = new() { "Secreção nasal" },
+                Alimentacao = "Normorexia",
+                IngestaoAgua = "Normodipsia",
+                Ambiente = new() { "Urbano", "Acesso à rua" },
                 CondutaClinica = "Solicitar PCR para herpesvírus felino. Suporte com nebulização.",
-                InspecaoGeral = new InspecaoGeral
+                TratamentosExamesSolicitados = "PCR herpesvírus felino. FIV/FeLV.",
+                Retorno = "Em 10 dias com resultado do PCR.",
+                HistoricoClinico = new HistoricoClinico
                 {
-                    Temperatura = "39.4 C", Fc = "180 bpm", Fr = "32 mrpm",
-                    Nariz = new() { "Espirros", "Secreção" }
+                    Vacinacao = true, VacinacaoData = "11/2025", VacinacaoQuais = "V4 felina",
+                    TestadoFivFelv = false, TestadoFivFelvDescricao = "A ser solicitado agora",
+                    AlergiaMedicamentos = false
+                },
+                ParametrosClinicos = new Dictionary<string, ParametroClinico>
+                {
+                    ["temperatura"] = new() { Status = "Alterada", Descricao = "39.4 °C (febrícula)" },
+                    ["frequenciaCardiaca"] = new() { Status = "Normal", Descricao = "180 bpm" },
+                    ["frequenciaRespiratoria"] = new() { Status = "Normal", Descricao = "32 mrpm" },
+                    ["cavidadeNasal"] = new() { Status = "Alterada", Descricao = "Secreção serosa bilateral" }
                 }
             }
         });
