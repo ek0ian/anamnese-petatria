@@ -1,6 +1,32 @@
-@AnamnesePetAtria.Api_HostAddress = http://localhost:5017
+@AnamnesePetAtria.Api_HostAddress = http://localhost:5147
 
-GET {{AnamnesePetAtria.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Registrar um usuario (perfil admin)
+POST {{AnamnesePetAtria.Api_HostAddress}}/api/auth/registrar
+Content-Type: application/json
+
+{
+  "nome": "Veterinario Teste",
+  "email": "vet@teste.com",
+  "senha": "Senha123!",
+  "perfil": "admin"
+}
+
+### Login (captura o token na variavel "login")
+# @name login
+POST {{AnamnesePetAtria.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "vet@teste.com",
+  "senha": "Senha123!"
+}
+
+### Listar pacientes (usa o token capturado no login acima)
+GET {{AnamnesePetAtria.Api_HostAddress}}/api/pacientes
+Authorization: Bearer {{login.response.body.token}}
+
+### Listar tutores
+GET {{AnamnesePetAtria.Api_HostAddress}}/api/tutores
+Authorization: Bearer {{login.response.body.token}}
 
 ###
