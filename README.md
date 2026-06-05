@@ -230,7 +230,7 @@ Veja [SOLID.md](SOLID.md) na raiz do repositório.
 
 - ✅ **Bônus A** — JWT + registro/login com expiração configurável.
 - ✅ **Bônus B** — RBAC com perfis `admin` e `veterinario`. Apenas admin pode deletar (verificado por `[Authorize(Roles = ...)]`).
-- ✅ **Bônus C** — 21 testes unitários xUnit, executáveis com `dotnet test`.
+- ✅ **Bônus C** — 29 testes unitários xUnit (inclui CRUD de serviço com Moq), executáveis com `dotnet test`.
 - ✅ **Bônus D** — Princípios SOLID aplicados, documentados em [SOLID.md](SOLID.md).
 
 ---
