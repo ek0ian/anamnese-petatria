@@ -110,23 +110,59 @@ Em seguida, abra `http://localhost:8080`.
 
 ---
 
-## Variáveis de ambiente
+## Variáveis de ambiente e configuração
 
-A API lê configurações de `backend/AnamnesePetAtria.Api/appsettings.json`. Pra produção, copie `.env.example` para `.env` e adapte:
+Há **duas fontes de configuração distintas**, e é importante não confundi-las:
+
+### 1. `.env` — usado apenas pelo Docker Compose
+
+O arquivo `.env` (na raiz) é lido **só** pelo `docker-compose.yml` para subir o container do MongoDB. A API .NET **não** lê esse arquivo. Copie `.env.example` para `.env` e ajuste:
 
 ```
 MONGO_USER=petatria
 MONGO_PASS=petatria123
-MONGO_CONNECTION=mongodb://petatria:petatria123@localhost:27018/?authSource=admin
-MONGO_DATABASE=anamnese_petatria
-
-JWT_SECRET=troque-este-segredo-em-producao-com-pelo-menos-32-caracteres
-JWT_ISSUER=anamnese-petatria
-JWT_AUDIENCE=anamnese-petatria-clients
-JWT_EXPIRATION_HOURS=8
 ```
 
-> **Nunca commite o `.env` real.** Ele já está no `.gitignore`.
+> **Nunca commite o `.env` real.** Ele já está no `.gitignore` (regra `*.env`).
+
+### 2. API .NET — sistema de configuração em camadas do ASP.NET Core
+
+A API usa o mecanismo nativo de configuração do ASP.NET Core, que carrega as fontes
+**nesta ordem (a última vence)**:
+
+```
+appsettings.json  →  appsettings.{Environment}.json  →  variáveis de ambiente  →  args
+```
+
+- `appsettings.json` guarda apenas **defaults de desenvolvimento** (inclusive um `Jwt:Secret`
+  placeholder). Por serem valores de dev, podem ficar versionados sem problema.
+- Em **produção**, os valores sensíveis são sobrescritos por **variáveis de ambiente**, que
+  têm prioridade sobre o arquivo e nunca vão para o Git.
+
+Chaves aninhadas usam `__` (duplo underscore) para representar o `:` da hierarquia do JSON.
+Por exemplo, a chave `Jwt:Secret` do `appsettings.json` corresponde à variável `Jwt__Secret`.
+
+#### Exemplo — rodar a API com o secret vindo de variável de ambiente
+
+Isso simula o cenário de produção: o `appsettings.json` continua com o placeholder, mas a
+variável de ambiente o **sobrescreve** em tempo de execução.
+
+```powershell
+# PowerShell (Windows)
+$env:Jwt__Secret = "um-segredo-forte-com-pelo-menos-32-caracteres-aqui"
+$env:MongoDb__ConnectionString = "mongodb://petatria:petatria123@localhost:27018/?authSource=admin"
+dotnet run --project backend/AnamnesePetAtria.Api
+```
+
+```bash
+# bash (Linux/macOS) — prefixo inline, vale só para este processo
+Jwt__Secret="um-segredo-forte-com-pelo-menos-32-caracteres-aqui" \
+MongoDb__ConnectionString="mongodb://petatria:petatria123@localhost:27018/?authSource=admin" \
+dotnet run --project backend/AnamnesePetAtria.Api
+```
+
+Como a variável de ambiente está **depois** do `appsettings.json` na ordem de carregamento,
+o `Jwt:Secret` efetivo passa a ser o da variável — sem alterar nenhum arquivo versionado.
 
 ---
 
@@ -161,14 +197,16 @@ Todos os endpoints com `[Authorize]` exigem header `Authorization: Bearer <token
 dotnet test backend/AnamnesePetAtria.Tests/AnamnesePetAtria.Tests.csproj
 ```
 
-São **21 testes** cobrindo:
+São **29 testes** cobrindo:
 
 - `PasswordHasherTests` — hash/verify do BCrypt (4 cenários).
 - `JwtTokenServiceTests` — geração e conteúdo do token (3 cenários).
 - `CatalogoExamesTests` — filtragem e categorias do catálogo (5 cenários).
 - `ModelosAtestadoTests` — modelos padrão dos 7 tipos de atestado (9 cenários — Theory + Fact).
+- `PacienteServiceTests` — CRUD do serviço de pacientes com o `IMongoDbContext` mockado via Moq (8 cenários): buscar por id existente/inexistente, criar com dados válidos vs. tutor inexistente, atualizar existente/inexistente e remover com sucesso/sem efeito.
 
-Cobre os 4 cenários (2 sucesso + 2 erro) exigidos pelo bônus C, e bem mais.
+Cobre os 4 cenários (2 sucesso + 2 erro) exigidos pelo bônus C — inclusive na camada de
+serviço de CRUD (`PacienteService`), com cenários como "busca por id existente vs. inexistente".
 
 ---
 
