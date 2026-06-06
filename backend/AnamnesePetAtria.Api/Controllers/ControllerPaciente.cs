@@ -53,8 +53,6 @@ public abstract class ControllerPaciente<T> : ControllerBase
         await _svc.RemoverAsync(id) ? NoContent() : NotFound();
 }
 
-// ============ Controllers concretos ============
-
 [Route("api/vacinas")]
 public class VacinasController : ControllerPaciente<Vacina>
 {

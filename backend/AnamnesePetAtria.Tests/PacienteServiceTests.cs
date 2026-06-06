@@ -36,8 +36,6 @@ public class PacienteServiceTests
         TutorId = tutorId
     };
 
-    // ---- Helpers de mock do driver Mongo -------------------------------------
-
     // Cria um IAsyncCursor falso. O FindFluent do driver, ao executar
     // FirstOrDefaultAsync()/ToListAsync(), delega para IMongoCollection.FindAsync,
     // que aqui retorna este cursor. MoveNextAsync devolve true uma vez (com o lote)
@@ -72,8 +70,6 @@ public class PacienteServiceTests
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(() => Cursor(resultado));
 
-    // ---- Buscar por id -------------------------------------------------------
-
     [Fact] // SUCESSO: id existente devolve o paciente materializado com nome do tutor
     public async Task ObterPorIdAsync_QuandoExiste_RetornaPaciente()
     {
@@ -98,8 +94,6 @@ public class PacienteServiceTests
 
         Assert.Null(resultado);
     }
-
-    // ---- Criar ---------------------------------------------------------------
 
     [Fact] // SUCESSO: dados validos inserem o paciente e geram codigo sequencial
     public async Task CriarAsync_ComDadosValidos_InsereEGeraCodigoSequencial()
@@ -132,8 +126,6 @@ public class PacienteServiceTests
             c => c.InsertOneAsync(It.IsAny<Paciente>(), It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()),
             Times.Never);
     }
-
-    // ---- Atualizar -----------------------------------------------------------
 
     [Fact] // SUCESSO: paciente existente e atualizado e o servico retorna true
     public async Task AtualizarAsync_QuandoExiste_RetornaTrue()
@@ -168,8 +160,6 @@ public class PacienteServiceTests
                 It.IsAny<CancellationToken>()),
             Times.Never);
     }
-
-    // ---- Remover -------------------------------------------------------------
 
     [Theory] // SUCESSO (1 removido -> true) e ERRO/borda (0 removidos -> false)
     [InlineData(1, true)]

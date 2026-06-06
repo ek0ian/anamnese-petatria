@@ -1,275 +1,326 @@
-# Anamnese Pet'Atria
+# 🐾 Anamnese Pet'Atria
 
-Sistema web para gerenciamento de fichas de anamnese veterinária, inspirado no modelo da clínica Camila Rosa Medicina Veterinária. Trabalho Prático Semestral de **Arquitetura de Aplicações Web 2026.1**.
+<div align="center">
 
-A aplicação permite que veterinários autenticados:
+### Sistema de Prontuário e Anamnese Veterinária
 
-- Cadastrem **tutores** e **pacientes** (animais) com código sequencial único.
-- Preencham fichas de **anamnese** completas (queixa principal, histórico clínico, inspeção geral, diagnóstico, conduta).
-- Emitam **atestados e termos** a partir de modelos pré-cadastrados (Termo para Exames, Procedimento Cirúrgico, Eutanásia, Óbito, Retirada sem Alta, Encaminhamento, etc).
-- Solicitem **exames** organizados por categoria (Hematologia, Bioquímico, Urinário, Parasitológico, Imagem, Sorologia).
-- Gerenciem vacinas, prescrições, retornos, procedimentos, cirurgias, internações e orçamentos por paciente.
+Trabalho Prático Semestral da disciplina **Arquitetura de Aplicações Web — 2026.1**.
 
----
+Plataforma web para clínicas veterinárias gerenciarem tutores, pacientes, fichas de anamnese, atestados e exames através de uma API REST integrada ao MongoDB.
 
-## Stack
+![.NET](https://img.shields.io/badge/.NET-10-512BD4)
+![C#](https://img.shields.io/badge/C%23-Language-purple)
+![MongoDB](https://img.shields.io/badge/MongoDB-7-green)
+![JWT](https://img.shields.io/badge/JWT-Authentication-orange)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-brightgreen)
+![xUnit](https://img.shields.io/badge/xUnit-Testing-red)
+![Docker](https://img.shields.io/badge/Docker-Compose-blue)
 
-| Camada    | Tecnologia                                |
-| --------- | ----------------------------------------- |
-| Backend   | .NET 10 (C#) — ASP.NET Core Web API       |
-| Banco     | MongoDB 7 (rodando em Docker)             |
-| Frontend  | HTML5 + CSS3 + JavaScript (fetch puro)    |
-| Doc       | Swagger / OpenAPI (Swashbuckle 10)        |
-| Auth      | JWT (HS256) com RBAC (admin, veterinário) |
-| Testes    | xUnit + Moq                               |
+</div>
 
 ---
 
-## Pré-requisitos
+## 📖 Visão Geral
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (para subir o MongoDB)
+O **Anamnese Pet'Atria** é uma aplicação web voltada à gestão de prontuários: cadastro de tutores e pacientes, fichas de anamnese completas, emissão de atestados/termos e solicitação de exames.
+
+O projeto demonstra os principais conceitos de desenvolvimento web moderno:
+
+- Design de API RESTful
+- Integração com banco NoSQL (MongoDB)
+- Autenticação com JWT
+- Controle de acesso por perfil (RBAC)
+- Documentação OpenAPI / Swagger
+- Testes unitários
+- Princípios SOLID
+- Comunicação assíncrona no frontend
+
+---
+
+## ✨ Funcionalidades
+
+### 👤 Tutores e Pacientes
+
+- Cadastrar tutores e pacientes (animais)
+- Código sequencial único por paciente
+- Buscar por nome ou código
+- Atualizar e remover registros
+- Idade do paciente formatada automaticamente
+
+### 📋 Anamnese
+
+- Criar fichas de anamnese vinculadas ao paciente
+- Queixa principal, histórico clínico, inspeção geral, diagnóstico e conduta
+- Listar histórico de anamneses do paciente
+
+### 📄 Atestados e Termos
+
+- Emitir a partir de modelos pré-cadastrados
+- Termo para Exames, Procedimento Cirúrgico, Eutanásia, Óbito, Retirada sem Alta, Encaminhamento, entre outros
+
+### 🔬 Exames
+
+- Catálogo organizado por categoria (Hematologia, Bioquímico, Urinário, Parasitológico, Imagem, Sorologia)
+- Autocomplete de exames
+- Solicitações vinculadas ao paciente
+
+### 🩺 Acompanhamento do Paciente
+
+- Vacinas, prescrições, retornos, procedimentos, cirurgias, internações e orçamentos
+
+### 🔐 Autenticação e Autorização
+
+- Registro e login de usuários
+- Autenticação via JWT
+- Controle de acesso por perfil (admin e veterinário)
+
+---
+
+## 🛠️ Stack Tecnológica
+
+### Backend
+
+- .NET 10 (C#)
+- ASP.NET Core Web API
+
+### Banco de Dados
+
+- MongoDB 7
+- MongoDB.Driver
+
+### Segurança
+
+- JSON Web Tokens (JWT, HS256)
+- Hash de senha com BCrypt
+
+### Testes
+
+- xUnit
+- Moq
+
+### Documentação
+
+- Swagger / OpenAPI (Swashbuckle)
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript (fetch puro)
+
+### Containerização
+
+- Docker Compose (MongoDB)
+
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+backend/
+├── AnamnesePetAtria.Api/
+│   ├── Configuration/        # settings (Mongo, JWT, Swagger)
+│   ├── Controllers/          # endpoints REST
+│   ├── Data/                 # contexto Mongo, catálogos seed
+│   ├── DTOs/                 # payloads de request/response
+│   ├── Models/               # entidades do domínio
+│   ├── Repositories/         # repositório genérico
+│   ├── Services/             # regras de negócio (interfaces + impl)
+│   └── Program.cs            # composition root
+└── AnamnesePetAtria.Tests/   # testes xUnit
+
+frontend/
+├── css/
+├── js/                       # api.js, auth.js, abas.js, modais.js, app.js
+└── index.html
+```
+
+---
+
+## 🚀 Instalação
+
+### 📋 Pré-requisitos
+
+- .NET 10 SDK
+- Docker Desktop (para subir o MongoDB)
 - Um navegador moderno (Chrome, Edge, Firefox)
 
-Opcional: VS Code, Visual Studio 2026 ou JetBrains Rider para mexer no código.
-
----
-
-## Como executar localmente
-
-### 1. Clone o repositório
+### 📥 Clonar o Repositório
 
 ```bash
 git clone https://github.com/ek0ian/anamnese-petatria.git
 cd anamnese-petatria
 ```
 
-### 2. Suba o MongoDB via Docker
+---
+
+## ⚙️ Variáveis de Ambiente
+
+O arquivo `.env` (na raiz) é usado **apenas pelo Docker Compose** para subir o MongoDB. Copie o exemplo e ajuste se quiser:
+
+```env
+MONGO_USER=petatria
+MONGO_PASS=petatria123
+```
+
+> A API .NET lê a configuração de `appsettings.json` (com defaults de desenvolvimento). Em produção, valores sensíveis — como `Jwt__Secret` — podem ser sobrescritos por variáveis de ambiente. O `.env` real nunca é commitado (já está no `.gitignore`).
+
+---
+
+## ▶️ Executando a Aplicação
+
+### 1. Suba o MongoDB
 
 ```bash
 docker compose up -d
 ```
 
-Isso sobe dois containers:
+Sobe o `mongodb-petatria` na porta **27018** (não a 27017 padrão, para conviver com outros projetos) e o `mongo-express-petatria` na porta **8082** (inspeção opcional).
 
-- `mongodb-petatria` na porta **27018** (não usa a 27017 padrão de propósito, para conviver com outros projetos que já usam Mongo).
-- `mongo-express-petatria` na porta **8082** (interface web para inspeção rápida, opcional).
-
-Volumes nomeados (`petatria_mongo_data`) garantem que os dados não se misturem com outras instâncias.
-
-### 3. Suba a API
+### 2. Suba a API
 
 ```bash
 dotnet run --project backend/AnamnesePetAtria.Api
 ```
 
-A API ficará disponível em `http://localhost:5147`.
+A API fica disponível em `http://localhost:5147`. A primeira request demora um pouco enquanto o driver do Mongo abre conexão.
 
-A primeira request demora um pouco enquanto o driver do Mongo abre conexão.
-
-### 4. Acesse o Swagger
-
-Com a API rodando, abra:
-
-```
-http://localhost:5147/swagger
-```
-
-O Swagger UI lista todos os endpoints, exige o token JWT no botão **Authorize** para chamadas protegidas. Endereço `/` redireciona pra `/swagger`.
-
-### 5. Sirva o frontend
-
-O frontend é HTML puro. Basta abrir o arquivo:
-
-```
-frontend/index.html
-```
-
-Recomendado servir via um servidor estático simples (evita problemas de CORS no fetch):
+### 3. Sirva o frontend
 
 ```bash
-# Opção 1 — via dotnet
-dotnet tool install --global dotnet-serve
-cd frontend
-dotnet serve -p 8080
-
-# Opção 2 — via Python
 cd frontend
 python -m http.server 8080
 ```
 
-Em seguida, abra `http://localhost:8080`.
-
-### 6. Crie um usuário e teste
-
-1. Clique em **Registrar-se** na tela de login.
-2. Crie um usuário (perfil **admin** se quiser deletar registros depois).
-3. Faça login → vai cair na tela principal com a sidebar de pacientes.
-4. Clique no **+** do topo para cadastrar um tutor + paciente.
-5. Selecione o paciente na lista → use as abas (Anamnese, Exames, Atestados, etc).
+Em seguida, abra `http://localhost:8080`, registre-se (escolha o perfil **Administrador** para poder excluir registros) e faça login.
 
 ---
 
-## Variáveis de ambiente e configuração
-
-Há **duas fontes de configuração distintas**, e é importante não confundi-las:
-
-### 1. `.env` — usado apenas pelo Docker Compose
-
-O arquivo `.env` (na raiz) é lido **só** pelo `docker-compose.yml` para subir o container do MongoDB. A API .NET **não** lê esse arquivo. Copie `.env.example` para `.env` e ajuste:
-
-```
-MONGO_USER=petatria
-MONGO_PASS=petatria123
-```
-
-> **Nunca commite o `.env` real.** Ele já está no `.gitignore` (regra `*.env`).
-
-### 2. API .NET — sistema de configuração em camadas do ASP.NET Core
-
-A API usa o mecanismo nativo de configuração do ASP.NET Core, que carrega as fontes
-**nesta ordem (a última vence)**:
-
-```
-appsettings.json  →  appsettings.{Environment}.json  →  variáveis de ambiente  →  args
-```
-
-- `appsettings.json` guarda apenas **defaults de desenvolvimento** (inclusive um `Jwt:Secret`
-  placeholder). Por serem valores de dev, podem ficar versionados sem problema.
-- Em **produção**, os valores sensíveis são sobrescritos por **variáveis de ambiente**, que
-  têm prioridade sobre o arquivo e nunca vão para o Git.
-
-Chaves aninhadas usam `__` (duplo underscore) para representar o `:` da hierarquia do JSON.
-Por exemplo, a chave `Jwt:Secret` do `appsettings.json` corresponde à variável `Jwt__Secret`.
-
-#### Exemplo — rodar a API com o secret vindo de variável de ambiente
-
-Isso simula o cenário de produção: o `appsettings.json` continua com o placeholder, mas a
-variável de ambiente o **sobrescreve** em tempo de execução.
-
-```powershell
-# PowerShell (Windows)
-$env:Jwt__Secret = "um-segredo-forte-com-pelo-menos-32-caracteres-aqui"
-$env:MongoDb__ConnectionString = "mongodb://petatria:petatria123@localhost:27018/?authSource=admin"
-dotnet run --project backend/AnamnesePetAtria.Api
-```
-
-```bash
-# bash (Linux/macOS) — prefixo inline, vale só para este processo
-Jwt__Secret="um-segredo-forte-com-pelo-menos-32-caracteres-aqui" \
-MongoDb__ConnectionString="mongodb://petatria:petatria123@localhost:27018/?authSource=admin" \
-dotnet run --project backend/AnamnesePetAtria.Api
-```
-
-Como a variável de ambiente está **depois** do `appsettings.json` na ordem de carregamento,
-o `Jwt:Secret` efetivo passa a ser o da variável — sem alterar nenhum arquivo versionado.
-
----
-
-## Endpoints principais
-
-| Método | Rota                                | Auth   | Descrição                                     |
-| ------ | ----------------------------------- | ------ | --------------------------------------------- |
-| POST   | `/api/auth/registrar`               | —      | Cria usuário (veterinário ou admin)           |
-| POST   | `/api/auth/login`                   | —      | Retorna JWT + dados do usuário                |
-| GET    | `/api/tutores?busca=...`            | JWT    | Lista tutores                                 |
-| POST   | `/api/tutores`                      | JWT    | Cadastra tutor                                |
-| DELETE | `/api/tutores/{id}`                 | admin  | Remove tutor                                  |
-| GET    | `/api/pacientes?busca=...`          | JWT    | Lista pacientes (busca por nome ou código)    |
-| GET    | `/api/pacientes/{id}`               | JWT    | Detalhes do paciente (inclui idade formatada) |
-| POST   | `/api/pacientes`                    | JWT    | Cadastra paciente (gera código sequencial)    |
-| DELETE | `/api/pacientes/{id}`               | admin  | Remove paciente                               |
-| GET    | `/api/anamneses/paciente/{id}`      | JWT    | Lista anamneses do paciente                   |
-| POST   | `/api/anamneses`                    | JWT    | Cria anamnese                                 |
-| GET    | `/api/exames/categorias`            | JWT    | Categorias do catálogo                        |
-| GET    | `/api/exames/catalogo?termo=...`    | JWT    | Autocomplete de exames                        |
-| POST   | `/api/exames`                       | JWT    | Cria solicitação de exames                    |
-| GET    | `/api/atestados/modelos`            | JWT    | Modelos de atestados/termos pré-cadastrados   |
-| POST   | `/api/atestados`                    | JWT    | Emite atestado                                |
-
-Todos os endpoints com `[Authorize]` exigem header `Authorization: Bearer <token>`. Os `admin`-only respondem **403 Forbidden** se chamados por usuário com perfil `veterinario`.
-
----
-
-## Rodando os testes
+## 🧪 Rodando os Testes
 
 ```bash
 dotnet test backend/AnamnesePetAtria.Tests/AnamnesePetAtria.Tests.csproj
 ```
 
-São **29 testes** cobrindo:
+São **29 testes** cobrindo as regras de negócio e o CRUD da camada de serviço:
 
-- `PasswordHasherTests` — hash/verify do BCrypt (4 cenários).
-- `JwtTokenServiceTests` — geração e conteúdo do token (3 cenários).
-- `CatalogoExamesTests` — filtragem e categorias do catálogo (5 cenários).
-- `ModelosAtestadoTests` — modelos padrão dos 7 tipos de atestado (9 cenários — Theory + Fact).
-- `PacienteServiceTests` — CRUD do serviço de pacientes com o `IMongoDbContext` mockado via Moq (8 cenários): buscar por id existente/inexistente, criar com dados válidos vs. tutor inexistente, atualizar existente/inexistente e remover com sucesso/sem efeito.
-
-Cobre os 4 cenários (2 sucesso + 2 erro) exigidos pelo bônus C — inclusive na camada de
-serviço de CRUD (`PacienteService`), com cenários como "busca por id existente vs. inexistente".
+- `PasswordHasherTests` — hash/verify do BCrypt
+- `JwtTokenServiceTests` — geração e conteúdo do token
+- `CatalogoExamesTests` — filtragem e categorias do catálogo
+- `ModelosAtestadoTests` — modelos padrão dos atestados
+- `PacienteServiceTests` — CRUD de pacientes com `IMongoDbContext` mockado via Moq (sucesso e erro)
 
 ---
 
-## Princípios SOLID aplicados
+## 📚 Documentação da API
 
-Veja [SOLID.md](SOLID.md) na raiz do repositório.
+Com a aplicação rodando, o Swagger fica disponível em:
 
----
-
-## Critérios atendidos
-
-### Obrigatórios
-
-- ✅ REST API com CRUD completo em 2+ entidades (Pacientes, Tutores, Anamneses, Atestados, Exames).
-- ✅ Banco NoSQL real (MongoDB no Docker, **não** em memória).
-- ✅ Swagger/OpenAPI com descrições, schemas e suporte a JWT.
-- ✅ Frontend com navegação assíncrona (fetch, sem reload).
-- ✅ README claro com instruções de execução.
-
-### Bônus
-
-- ✅ **Bônus A** — JWT + registro/login com expiração configurável.
-- ✅ **Bônus B** — RBAC com perfis `admin` e `veterinario`. Apenas admin pode deletar (verificado por `[Authorize(Roles = ...)]`).
-- ✅ **Bônus C** — 29 testes unitários xUnit (inclui CRUD de serviço com Moq), executáveis com `dotnet test`.
-- ✅ **Bônus D** — Princípios SOLID aplicados, documentados em [SOLID.md](SOLID.md).
-
----
-
-## Estrutura do repositório
-
-```
-anamnese-petatria/
-├── backend/
-│   ├── AnamnesePetAtria.slnx
-│   ├── AnamnesePetAtria.Api/
-│   │   ├── Configuration/        — settings (Mongo, JWT, Swagger)
-│   │   ├── Controllers/          — endpoints REST
-│   │   ├── Data/                 — contexto Mongo, catálogos seed
-│   │   ├── DTOs/                 — payloads de request/response
-│   │   ├── Models/               — entidades do domínio
-│   │   ├── Repositories/         — repositório genérico (SOLID O)
-│   │   ├── Services/             — regras de negócio (interfaces + impl)
-│   │   └── Program.cs            — composition root
-│   └── AnamnesePetAtria.Tests/   — testes xUnit
-├── frontend/
-│   ├── index.html
-│   ├── css/style.css
-│   └── js/                       — api.js, auth.js, abas.js, modais.js, app.js
-├── docker-compose.yml
-├── .env.example
-├── README.md
-└── SOLID.md
+```text
+http://localhost:5147/swagger
 ```
 
+O Swagger oferece:
+
+- Documentação dos endpoints
+- Schemas de request
+- Suporte a autenticação JWT (botão **Authorize**)
+- Interface interativa de testes
+
 ---
 
-## Sobre o Mongo no Docker conviver com outros projetos
+## 🔗 Endpoints da API
 
-A configuração foi pensada para não colidir com outras instâncias:
+### Autenticação
 
-- Porta no host: **27018** (não a 27017 padrão).
-- Nome do container: `mongodb-petatria`.
-- Volume nomeado: `petatria_mongo_data`.
-- Database name: `anamnese_petatria`.
+| Método | Endpoint            |
+| ------ | ------------------- |
+| POST   | /api/auth/registrar |
+| POST   | /api/auth/login     |
 
-Você pode rodar este projeto em paralelo com qualquer outro que use a porta padrão 27017.
+### Tutores
+
+| Método | Endpoint          |
+| ------ | ----------------- |
+| GET    | /api/tutores      |
+| GET    | /api/tutores/{id} |
+| POST   | /api/tutores      |
+| PUT    | /api/tutores/{id} |
+| DELETE | /api/tutores/{id} |
+
+### Pacientes
+
+| Método | Endpoint                  |
+| ------ | ------------------------- |
+| GET    | /api/pacientes            |
+| GET    | /api/pacientes/{id}       |
+| GET    | /api/pacientes/codigo/{n} |
+| POST   | /api/pacientes            |
+| PUT    | /api/pacientes/{id}       |
+| DELETE | /api/pacientes/{id}       |
+
+### Anamneses
+
+| Método | Endpoint                     |
+| ------ | ---------------------------- |
+| GET    | /api/anamneses/paciente/{id} |
+| GET    | /api/anamneses/{id}          |
+| POST   | /api/anamneses               |
+| PUT    | /api/anamneses/{id}          |
+| DELETE | /api/anamneses/{id}          |
+
+### Exames
+
+| Método | Endpoint                  |
+| ------ | ------------------------- |
+| GET    | /api/exames/categorias    |
+| GET    | /api/exames/catalogo      |
+| GET    | /api/exames/paciente/{id} |
+| POST   | /api/exames               |
+| PUT    | /api/exames/{id}          |
+| DELETE | /api/exames/{id}          |
+
+### Atestados
+
+| Método | Endpoint                     |
+| ------ | ---------------------------- |
+| GET    | /api/atestados/modelos       |
+| GET    | /api/atestados/paciente/{id} |
+| POST   | /api/atestados               |
+| PUT    | /api/atestados/{id}          |
+| DELETE | /api/atestados/{id}          |
+
+---
+
+## 🛡️ Segurança
+
+- Autenticação via JWT (HS256) com expiração configurável
+- Rotas protegidas com `[Authorize]`
+- Autorização por perfil (RBAC): apenas `admin` pode excluir registros, via `[Authorize(Roles = ...)]`
+- Hash de senha com BCrypt
+- Perfil do usuário embutido no payload do token e validado no servidor
+
+---
+
+## 🎓 Objetivos Acadêmicos
+
+Este projeto demonstra:
+
+- Desenvolvimento de API REST
+- Uso de banco de dados NoSQL
+- Autenticação e autorização
+- Documentação de API
+- Testes unitários
+- Boas práticas de arquitetura de software
+
+Os princípios **SOLID** aplicados estão mapeados em [SOLID.md](SOLID.md), com o arquivo/classe de cada princípio e a justificativa.
+
+---
+
+## 👨‍💻 Autor
+
+**Ian Oliveira**
+
+Arquitetura de Aplicações Web — Projeto Acadêmico
+
+2026

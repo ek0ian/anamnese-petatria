@@ -10,13 +10,11 @@ public static class CatalogoExames
 {
     public static readonly List<ItemExame> Itens = new()
     {
-        // Hematologia
         new() { Categoria = "Hematologia", Nome = "Hemograma completo" },
         new() { Categoria = "Hematologia", Nome = "Tipagem sanguinea gatos (A,B,AB)" },
         new() { Categoria = "Hematologia", Nome = "Tipagem sanguinea caes (DEA 1.1)" },
         new() { Categoria = "Hematologia", Nome = "Contagem de reticulocitos" },
 
-        // Bioquimica
         new()
         {
             Categoria = "Bioquimico",
@@ -37,19 +35,15 @@ public static class CatalogoExames
         new() { Categoria = "Bioquimico", Nome = "ALT (TGP)" },
         new() { Categoria = "Bioquimico", Nome = "AST (TGO)" },
 
-        // Urinario
         new() { Categoria = "Urinario", Nome = "Urinalise (EAS)" },
         new() { Categoria = "Urinario", Nome = "Relacao proteina/creatinina urinaria" },
 
-        // Parasitologico
         new() { Categoria = "Parasitologico", Nome = "Exame de fezes - 3 amostras" },
         new() { Categoria = "Parasitologico", Nome = "Pesquisa de Giardia" },
 
-        // Imagem
         new() { Categoria = "Imagem", Nome = "Radiografia simples" },
         new() { Categoria = "Imagem", Nome = "Ultrassonografia abdominal" },
 
-        // Sorologia
         new() { Categoria = "Sorologia", Nome = "Teste FIV/FeLV" },
         new() { Categoria = "Sorologia", Nome = "Sorologia para Leishmaniose" }
     };

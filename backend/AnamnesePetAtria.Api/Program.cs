@@ -8,11 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ========= Configuracao =========
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
-// ========= Servicos =========
 builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
 builder.Services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
@@ -39,7 +37,6 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddScoped(sp =>
     new ServicoPaciente<Orcamento>(sp.GetRequiredService<IMongoDbContext>().Orcamentos));
 
-// ========= Autenticacao JWT =========
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()
     ?? throw new InvalidOperationException("Secao 'Jwt' nao configurada em appsettings.");
 
@@ -66,7 +63,6 @@ builder.Services.AddAuthorization(options =>
         p => p.RequireRole(Perfis.Admin, Perfis.Veterinario));
 });
 
-// ========= CORS para o frontend local =========
 builder.Services.AddCors(opt =>
 {
     opt.AddDefaultPolicy(policy => policy

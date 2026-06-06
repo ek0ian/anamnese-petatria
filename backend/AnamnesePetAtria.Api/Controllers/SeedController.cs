@@ -23,13 +23,11 @@ public class SeedController : ControllerBase
         if (jaTem)
             return BadRequest(new { erro = "O banco já possui dados. Limpe-o antes de popular novamente." });
 
-        // ===== Tutores =====
         var tCamila = new Tutor { Nome = "Camila Rosa", Telefone = "(31) 99876-5432", Email = "camila.rosa@example.com", Cpf = "111.222.333-44" };
         var tJoao = new Tutor { Nome = "Joao Pereira", Telefone = "(31) 98765-4321", Email = "joao@example.com", Cpf = "222.333.444-55" };
         var tMaria = new Tutor { Nome = "Maria Souza", Telefone = "(31) 97654-3210", Email = "maria@example.com", Cpf = "333.444.555-66" };
         await _db.Tutores.InsertManyAsync(new[] { tCamila, tJoao, tMaria });
 
-        // ===== Pacientes =====
         var pMarley = new Paciente
         {
             Codigo = 1073064, Nome = "Marley", DataNascimento = new DateTime(2014, 8, 15),
@@ -50,7 +48,6 @@ public class SeedController : ControllerBase
         };
         await _db.Pacientes.InsertManyAsync(new[] { pMarley, pNina, pThor });
 
-        // ===== Anamneses =====
         await _db.Anamneses.InsertManyAsync(new[]
         {
             new Anamnese
@@ -126,7 +123,6 @@ public class SeedController : ControllerBase
             }
         });
 
-        // ===== Vacinas =====
         await _db.Vacinas.InsertManyAsync(new[]
         {
             new Vacina { PacienteId = pMarley.Id!, Nome = "V10 (Polivalente canina)", Fabricante = "Zoetis", Lote = "L2024-A", Dose = "Reforço anual", DataAplicacao = new DateTime(2025, 8, 10), ProximaDose = new DateTime(2026, 8, 10) },
@@ -134,7 +130,6 @@ public class SeedController : ControllerBase
             new Vacina { PacienteId = pNina.Id!, Nome = "V4 felina", Fabricante = "Zoetis", Lote = "F-221", Dose = "Reforço", DataAplicacao = new DateTime(2025, 11, 2), ProximaDose = new DateTime(2026, 11, 2) }
         });
 
-        // ===== Exames =====
         await _db.Exames.InsertManyAsync(new[]
         {
             new SolicitacaoExame
@@ -154,7 +149,6 @@ public class SeedController : ControllerBase
             }
         });
 
-        // ===== Atestados =====
         await _db.Atestados.InsertManyAsync(new[]
         {
             new AtestadoTermo
@@ -167,7 +161,6 @@ public class SeedController : ControllerBase
             }
         });
 
-        // ===== Prescricoes =====
         await _db.Prescricoes.InsertManyAsync(new[]
         {
             new Prescricao
@@ -183,7 +176,6 @@ public class SeedController : ControllerBase
             }
         });
 
-        // ===== Retornos =====
         await _db.Retornos.InsertManyAsync(new[]
         {
             new Retorno { PacienteId = pMarley.Id!, DataAgendada = DateTime.UtcNow.AddDays(5), Motivo = "Reavaliação após tratamento gástrico." },

@@ -15,7 +15,6 @@ public class Anamnese : EntidadeBase
     [BsonRepresentation(BsonType.ObjectId)]
     public string PacienteId { get; set; } = string.Empty;
 
-    // ========== Identificacao complementar do responsavel ==========
     [BsonElement("responsavel")]
     public string? Responsavel { get; set; }
 
@@ -28,11 +27,9 @@ public class Anamnese : EntidadeBase
     [BsonElement("telefoneResponsavel")]
     public string? TelefoneResponsavel { get; set; }
 
-    // ========== QUEIXA PRINCIPAL ==========
     [BsonElement("queixaPrincipal")]
     public string? QueixaPrincipal { get; set; }
 
-    // ========== ANAMNESE descritiva ==========
     [BsonElement("anamneseTexto")]
     public string? AnamneseTexto { get; set; }
 
@@ -48,7 +45,6 @@ public class Anamnese : EntidadeBase
     [BsonElement("doencasPresentesDescricao")]
     public string? DoencasPresentesDescricao { get; set; }
 
-    // ========== EXAME FISICO ==========
     /// <summary>Vomito, Regurgitacao, Diarreia (multi).</summary>
     [BsonElement("sistemaDigestorio")]
     public List<string> SistemaDigestorio { get; set; } = new();
@@ -126,11 +122,9 @@ public class Anamnese : EntidadeBase
     [BsonElement("ambienteOutros")]
     public string? AmbienteOutros { get; set; }
 
-    // ========== HISTORICO CLINICO ==========
     [BsonElement("historicoClinico")]
     public HistoricoClinico HistoricoClinico { get; set; } = new();
 
-    // ========== PARAMETROS CLINICOS ==========
     /// <summary>
     /// Cada parametro tem Status (Normal/Alterada) e Descricao opcional.
     /// Chaves usadas pelo frontend: hidratacao, temperatura, glicemia,
@@ -142,7 +136,6 @@ public class Anamnese : EntidadeBase
     [BsonElement("parametrosClinicos")]
     public Dictionary<string, ParametroClinico> ParametrosClinicos { get; set; } = new();
 
-    // ========== CONDUTA ==========
     [BsonElement("condutaClinica")]
     public string? CondutaClinica { get; set; }
 
